@@ -381,6 +381,60 @@ def before_after(moods: list[dict]) -> str:
     return "\n".join(o)
 
 
+# ---------------------------------------------------------------- social.svg（GitHub 分享封面 1280×640）
+def social(moods: list[dict]) -> str:
+    m = moods[0]
+    W, H = 1280, 640
+    o = [f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}">',
+         '<defs><filter id="ssh" x="-20%" y="-20%" width="140%" height="150%">'
+         '<feDropShadow dx="0" dy="22" stdDeviation="26" flood-color="#3A3326" flood-opacity=".20"/></filter></defs>',
+         f'<rect width="{W}" height="{H}" fill="{PAGE}"/>']
+    # 左侧文字
+    x = 84
+    o.append(f'<text x="{x}" y="200" font-family="{MONO}" font-size="76" font-weight="700" fill="{INK}" letter-spacing="-1">ghostty-tint</text>')
+    o.append(f'<text x="{x}" y="270" font-family="{SANS}" font-size="38" font-weight="700" fill="{INK}">每开一个面板，</text>')
+    o.append(f'<text x="{x}" y="322" font-family="{SANS}" font-size="38" font-weight="700" fill="{INK}">换一种安静的颜色。</text>')
+    o.append(f'<text x="{x}" y="370" font-family="{SANS}" font-size="21" fill="{INK2}">Every new Ghostty pane gets its own quiet color.</text>')
+    sw = 54
+    for i, c in enumerate(m["bg"]):
+        o.append(f'<rect x="{x + i * (sw + 6)}" y="408" width="{sw}" height="54" rx="9" fill="{c}" stroke="#000" stroke-opacity=".05"/>')
+    chips = ["零依赖", "zsh · bash", "7 种气质", "任意色数", "AI Skill"]
+    cx = x
+    for t in chips:
+        w = tw(t, 17) + 30
+        o.append(f'<rect x="{cx}" y="500" width="{w:.0f}" height="38" rx="19" fill="#FBFAF8" stroke="#DDD9D0"/>')
+        o.append(f'<text x="{cx + w / 2:.0f}" y="525" text-anchor="middle" font-family="{SANS}" font-size="17" fill="{INK}">{e(t)}</text>')
+        cx += w + 10
+    # 右侧窗口：左一大格 + 右侧四格，五种颜色 + 一块深色霓虹点缀
+    wx, wy, ww, wh, tb = 700, 96, 500, 448, 34
+    o.append(f'<clipPath id="sw"><rect x="{wx}" y="{wy}" width="{ww}" height="{wh}" rx="14"/></clipPath>')
+    o.append(f'<rect x="{wx}" y="{wy}" width="{ww}" height="{wh}" rx="14" fill="#000" filter="url(#ssh)" opacity=".85"/>')
+    o.append(f'<g clip-path="url(#sw)"><rect x="{wx}" y="{wy}" width="{ww}" height="{wh}" fill="{m["divider"]}"/>')
+    o.append(f'<rect x="{wx}" y="{wy}" width="{ww}" height="{tb}" fill="{m["chrome"]}"/>')
+    for i, c in enumerate(["#FF5F57", "#FEBC2E", "#28C840"]):
+        o.append(f'<circle cx="{wx + 20 + i * 20}" cy="{wy + tb / 2}" r="6.5" fill="{c}"/>')
+    py0, ph = wy + tb, wh - tb
+    lw = 248
+    rw = ww - lw - 2
+    hh = (ph - 4) / 3
+    panes = [(wx, py0, lw, ph)] + [(wx + lw + 2, py0 + k * (hh + 2), rw, hh) for k in range(3)]
+    texts = [["~/app ❯ claude", "", "✻ 重构 auth 模块", "  ⎿ 42 tests passed"], ["~/api ❯ npm run dev"],
+             ["~/web ❯ git log"], ["~ ❯ tint mood"]]
+    for k, (px, py, pw, phh) in enumerate(panes):
+        o.append(f'<rect x="{px}" y="{py:.1f}" width="{pw}" height="{phh:.1f}" fill="{m["spread"][k]}"/>')
+        for li, line in enumerate(texts[k]):
+            if line:
+                o.append(f'<text x="{px + 18}" y="{py + 32 + li * 25:.1f}" font-family="{MONO}" font-size="15" '
+                         f'fill="{INK}" opacity="{.9 if li == 0 or k == 0 and li == 2 else .55}" style="white-space:pre">{e(line)}</text>')
+        o.append(f'<text x="{px + pw - 14}" y="{py + phh - 14:.1f}" text-anchor="end" font-family="{SANS}" font-size="13" '
+                 f'fill="{INK}" opacity=".5">{e(m["spread_names"][k])}</text>')
+    o.append('</g>')
+    o.append(f'<text x="{wx + ww}" y="{wy + wh + 44}" text-anchor="end" font-family="{SANS}" font-size="17" fill="{INK2}">'
+             f'github.com/nevertoday/ghostty-tint</text>')
+    o.append('</svg>')
+    return "\n".join(o)
+
+
 # ---------------------------------------------------------------- 同步
 def sync_playground(moods: list[dict]) -> None:
     p = ROOT / "docs" / "index.html"
@@ -413,7 +467,7 @@ def main() -> None:
     moods = load_moods()
     out = ROOT / "assets"
     out.mkdir(exist_ok=True)
-    for name, fn in (("hero", hero), ("spread", spread), ("moods", gallery), ("how", how), ("before-after", before_after)):
+    for name, fn in (("hero", hero), ("spread", spread), ("moods", gallery), ("how", how), ("before-after", before_after), ("social", social)):
         (out / f"{name}.svg").write_text(fn(moods), encoding="utf-8")
         print(f"✓ assets/{name}.svg")
     sync_playground(moods)

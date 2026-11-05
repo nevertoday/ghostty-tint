@@ -6,6 +6,8 @@
 
 给 Ghostty 的每个分屏和标签自动配一块低饱和背景色，扫一眼就知道哪个面板在干嘛。
 
+<strong>简体中文</strong> · <a href="README.en.md">English</a> · <a href="README.ja.md">日本語</a> · <a href="README.ko.md">한국어</a> · <a href="README.ar.md">العربية</a>
+
 ![zero deps](https://img.shields.io/badge/依赖-0-8A9A8C?style=flat-square)
 ![shell](https://img.shields.io/badge/zsh%20%7C%20bash-✓-8A9A8C?style=flat-square)
 ![colors](https://img.shields.io/badge/颜色数量-随你-D7B9C8?style=flat-square)
@@ -24,8 +26,7 @@
   <a href="#-定制你的气质">定制</a> ·
   <a href="#-ai-skill">AI Skill</a> ·
   <a href="#-原理">原理</a> ·
-  <a href="https://nevertoday.github.io/ghostty-tint/">在线调色台</a> ·
-  <a href="README.en.md">English</a>
+  <a href="https://nevertoday.github.io/ghostty-tint/">在线调色台</a>
 </p>
 
 ## 😵 为什么需要它

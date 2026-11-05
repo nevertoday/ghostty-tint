@@ -6,6 +6,8 @@
 
 Each Ghostty split and tab gets a soft background of its own, so you can tell your panes apart at a glance.
 
+<a href="README.md">简体中文</a> · <strong>English</strong> · <a href="README.ja.md">日本語</a> · <a href="README.ko.md">한국어</a> · <a href="README.ar.md">العربية</a>
+
 ![zero deps](https://img.shields.io/badge/deps-0-8A9A8C?style=flat-square)
 ![shell](https://img.shields.io/badge/zsh%20%7C%20bash-✓-8A9A8C?style=flat-square)
 ![colors](https://img.shields.io/badge/colors-any%20number-D7B9C8?style=flat-square)
@@ -24,8 +26,7 @@ Each Ghostty split and tab gets a soft background of its own, so you can tell yo
   <a href="#-make-your-own">Make your own</a> ·
   <a href="#-ai-skill">AI Skill</a> ·
   <a href="#-how-it-works">How it works</a> ·
-  <a href="https://nevertoday.github.io/ghostty-tint/">Playground</a> ·
-  <a href="README.md">中文</a>
+  <a href="https://nevertoday.github.io/ghostty-tint/">Playground</a>
 </p>
 
 ## 😵 Why

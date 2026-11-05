@@ -9,7 +9,7 @@
   tint-gen.py --like mist --count 12 -o ~/.config/ghostty-tint/moods/mist12.tint
   tint-gen.py --seed '#D7E2EC' --count 8         # 从你喜欢的一个颜色出发
   tint-gen.py --l 0.9 --c 0.04 --hue 20 --span 120 --count 6   # 完全自定义
-  tint-gen.py --check moods/paper.tint           # 体检：对比度 + 相邻差异
+  tint-gen.py --check paper                      # 体检：对比度 + 相邻差异（可写气质名或路径）
   tint-gen.py --preview moods/macaron.tint       # 在终端里预览色块
 
 只用 Python 标准库，无需安装任何依赖。
@@ -203,7 +203,17 @@ def swatch(hx: str, text: str, fg: str) -> str:
     return f"\033[48;2;{r};{g};{b}m\033[38;2;{fr};{fgc};{fb}m {text} \033[0m"
 
 
+def resolve(path: str) -> str:
+    """--check kyoto 也行：不是文件路径时去气质目录里找"""
+    import os
+    if os.path.exists(path) or "/" in path:
+        return path
+    home = os.environ.get("TINT_HOME") or os.path.expanduser("~/.config/ghostty-tint")
+    return os.path.join(home, "moods", path if path.endswith(".tint") else f"{path}.tint")
+
+
 def check(path: str) -> int:
+    path = resolve(path)
     d = parse_tint(path)
     bgs = [hx for hx, _ in d["bg"]]
     if not bgs:
@@ -230,7 +240,7 @@ def check(path: str) -> int:
 
 
 def preview(path: str) -> None:
-    d = parse_tint(path)
+    d = parse_tint(resolve(path))
     fg = d["fg"] or LIGHT_FG
     print(f"{d['name']} — {d['vibe']}")
     row = [swatch(hx, f"{i + 1:>2}", fg) for i, (hx, _) in enumerate(d["bg"])]
@@ -286,7 +296,9 @@ def main() -> int:
     if a.out:
         with open(a.out, "w", encoding="utf-8") as fh:
             fh.write(text)
-        print(f"✓ 已写入 {a.out}（{a.count} 色）。在 Ghostty 里运行：tint mood {a.name}", file=sys.stderr)
+        import os
+        shown = a.out.replace(os.path.expanduser("~"), "~", 1)
+        print(f"✓ 已写入 {shown}（{a.count} 色）。在 Ghostty 里运行：tint mood {a.name}", file=sys.stderr)
     else:
         sys.stdout.write(text)
     return 0

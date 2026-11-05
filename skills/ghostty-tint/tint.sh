@@ -228,6 +228,7 @@ tint · 每开一个面板，换一种安静的颜色
   tint mood            列出所有气质
   tint mood mist       切换气质（之后的新面板都用它）
   tint gen …           生成新气质，如：tint gen --like paper --count 16 --name paper16
+  tint gen --check kyoto   体检一个气质：对比度 + 相邻色差
 
   配置目录：~/.config/ghostty-tint    文档：github.com/nevertoday/ghostty-tint
 EOF
@@ -295,11 +296,19 @@ tint() {
     mood | moods | m) shift; _tint_cmd_mood "$@"; return ;;
     gen | generate)
       shift
-      if [[ -r "$TINT_HOME/tint-gen.py" ]]; then
-        python3 "$TINT_HOME/tint-gen.py" "$@"
+      local g="$TINT_HOME/tint-gen.py" a prev="" name="" out=0
+      [[ -r $g ]] || { echo "tint: 没找到 $g，请重新运行 install.sh" >&2; return 1; }
+      for a in "$@"; do
+        case "$a" in -o | --out | --out=* | --check | --check=* | --preview | --preview=* | -h | --help) out=1 ;; esac
+        case "$a" in --name=*) name="${a#--name=}" ;; esac
+        [[ $prev == --name ]] && name="$a"
+        prev="$a"
+      done
+      # 给了 --name 又没给 -o：直接存进气质目录，生成完就能 tint mood <name>
+      if (( ! out )) && [[ -n $name ]]; then
+        TINT_HOME="$TINT_HOME" python3 "$g" "$@" -o "$TINT_HOME/moods/$name.tint"
       else
-        echo "tint: 没找到 $TINT_HOME/tint-gen.py，请重新运行 install.sh" >&2
-        return 1
+        TINT_HOME="$TINT_HOME" python3 "$g" "$@"
       fi
       return
       ;;

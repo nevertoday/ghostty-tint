@@ -16,7 +16,6 @@
 <p align="center">
   <img src="assets/split.gif" width="100%" alt="按 ⌘D 开分屏，每个新面板自动换一种低饱和颜色；再用 tint mood 一键切换气质">
 </p>
-<p align="center"><sub>按 ⌘D 开分屏，新面板自动换色；一条 <code>tint mood</code> 换掉整个气质</sub></p>
 
 <p align="center">
   <a href="#-安装">安装</a> ·
@@ -147,7 +146,6 @@ bg    #E2DCBA  金阁  gold yellow
 <p align="center">
   <img src="assets/skill.gif" width="100%" alt="对 AI 说「我想要京都秋天寺庙的感觉」，它生成八色京都秋气质并应用到所有面板">
 </p>
-<p align="center"><sub>说一句「京都秋天寺庙的感觉」，AI 生成八色气质并应用到所有面板</sub></p>
 
 运行 `bash install.sh --skill`，Skill 会装进 `~/.claude/skills/`（装了 Codex 的话也会装进 `~/.codex/skills/`）。之后直接说你想要的感觉：
 

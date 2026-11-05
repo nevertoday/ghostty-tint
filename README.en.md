@@ -16,7 +16,6 @@ Each Ghostty split and tab gets a soft background of its own, so you can tell yo
 <p align="center">
   <img src="assets/split.gif" width="100%" alt="Press ⌘D: each new pane picks up its own soft color; tint mood switches the whole mood">
 </p>
-<p align="center"><sub>Press ⌘D and the new pane colors itself; one <code>tint mood</code> swaps the whole mood</sub></p>
 
 <p align="center">
   <a href="#-install">Install</a> ·

@@ -1,0 +1,17 @@
+# ghostty-tint mood · 默认气质
+# 8 个与 Otty Paper 同族的低饱和颜色：L≈0.91 C≈0.027，绕色轮一圈。
+# 格式：bg  #RRGGBB  名字  别名…   （按色相顺序排列，tint 会自动分散取色）
+# 别名可以直接用：tint red / tint 后端 / tint prod
+
+name  纸感 Paper
+vibe  低饱和暖纸色，像一桌便签
+fg    #1A1A1A
+
+bg    #EBD6D3  珊瑚粉  red prod 危险
+bg    #EFDFC9  杏桃灰  orange warn 注意
+bg    #ECE5C6  沙金灰  yellow temp 临时
+bg    #DDE7D3  鼠尾草  green dev 开发
+bg    #D3E5DF  青瓷灰  cyan teal api 后端
+bg    #D7E2EC  雾蓝灰  blue test 测试
+bg    #E0DAEA  烟紫灰  purple doc 文档
+bg    #EFDCE6  梅子粉  pink ui 前端

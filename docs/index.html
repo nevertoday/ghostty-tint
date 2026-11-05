@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ghostty-tint 调色台</title>
+<meta name="description" content="拖动滑杆，生成你自己的 Ghostty 面板配色气质，一键复制安装。">
+<style>
+:root{
+  --page:#F1EFEA; --card:#FBFAF8; --line:#E2DED6; --ink:#2B2A27; --ink2:#8A867D; --accent:#2B2A27;
+  --chip:#ECE9E2; --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --sans:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Noto Sans CJK SC","Microsoft YaHei",sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --page:#151619; --card:#1D1F23; --line:#2E3036; --ink:#ECEAE4; --ink2:#9A9890; --accent:#ECEAE4; --chip:#26282D;
+}}
+:root[data-theme="dark"]{--page:#151619;--card:#1D1F23;--line:#2E3036;--ink:#ECEAE4;--ink2:#9A9890;--accent:#ECEAE4;--chip:#26282D}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page);color:var(--ink);font:15px/1.6 var(--sans);-webkit-font-smoothing:antialiased}
+a{color:inherit}
+.wrap{max-width:1180px;margin:0 auto;padding:28px 16px 64px}
+header{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:22px}
+h1{font-size:26px;margin:0;letter-spacing:.01em}
+h1 small{font-weight:500;color:var(--ink2);font-size:16px;margin-left:8px}
+header p{margin:4px 0 0;color:var(--ink2)}
+header nav a{color:var(--ink2);text-decoration:none;font-size:14px;border-bottom:1px solid var(--line)}
+.grid{display:grid;grid-template-columns:340px 1fr;gap:20px;align-items:start}
+@media (max-width:900px){.grid{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px}
+.card h2{font-size:13px;letter-spacing:.08em;color:var(--ink2);margin:0 0 12px;font-weight:600}
+.moods{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:6px}
+.mood{border:1px solid var(--line);background:var(--chip);color:var(--ink);border-radius:999px;padding:5px 12px 5px 6px;
+  font:inherit;font-size:13.5px;cursor:pointer;display:flex;align-items:center;gap:7px}
+.mood[aria-pressed="true"]{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent) inset}
+.mood i{width:16px;height:16px;border-radius:50%;display:block;border:1px solid rgba(0,0,0,.08)}
+.ctl{margin:16px 0 0}
+.ctl label{display:flex;justify-content:space-between;font-size:14px}
+.ctl label b{font:600 13px var(--mono)}
+.ctl small{display:block;color:var(--ink2);font-size:12.5px;margin-top:2px}
+input[type=range]{width:100%;accent-color:var(--accent);margin:6px 0 0}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.field{display:block;margin-top:14px;font-size:14px}
+.field input{display:block;width:100%;margin-top:4px;padding:7px 10px;border-radius:8px;border:1px solid var(--line);
+  background:var(--page);color:var(--ink);font:inherit;font-size:14px}
+.toggle{display:flex;align-items:center;gap:8px;margin-top:16px;font-size:14px;cursor:pointer}
+.toggle input{accent-color:var(--accent);width:16px;height:16px}
+
+.win{border-radius:12px;overflow:hidden;box-shadow:0 18px 40px -18px rgba(40,32,20,.35);border:1px solid var(--line)}
+.bar{height:34px;display:flex;align-items:center;gap:8px;padding:0 14px;position:relative;transition:background .4s}
+.bar span{width:12px;height:12px;border-radius:50%}
+.bar em{position:absolute;left:0;right:0;text-align:center;font:normal 12.5px var(--sans);pointer-events:none;transition:color .4s}
+.panes{display:grid;gap:2px;height:340px;transition:background .4s}
+.pane{position:relative;padding:14px 16px;font:13px/1.75 var(--mono);transition:background .45s,color .45s;overflow:hidden}
+.pane.new{animation:pop .4s cubic-bezier(.2,.8,.2,1)}
+@keyframes pop{from{transform:scale(.96);filter:brightness(1.06)}to{transform:none;filter:none}}
+.pane .dim{opacity:.55}
+.pane .tag{position:absolute;right:12px;bottom:9px;font:12px var(--sans);opacity:.6}
+.pane .no{position:absolute;right:12px;top:10px;font:600 11px var(--mono);opacity:.45}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+button.btn{font:inherit;font-size:14px;border-radius:9px;padding:8px 14px;cursor:pointer;border:1px solid var(--line);
+  background:var(--card);color:var(--ink)}
+button.btn.primary{background:var(--accent);color:var(--page);border-color:var(--accent)}
+button.btn:active{transform:translateY(1px)}
+.strip{display:flex;gap:3px;margin-top:8px}
+.strip div{flex:1;height:34px;border-radius:5px;position:relative;border:1px solid rgba(0,0,0,.05);cursor:pointer;min-width:0}
+.strip div b{position:absolute;left:0;right:0;bottom:-19px;text-align:center;font:500 11px var(--mono);color:var(--ink2)}
+.strips{display:grid;gap:26px;margin-top:4px;padding-bottom:16px}
+.strips p{margin:0;font-size:13px;color:var(--ink2)}
+.checks{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px}
+.badge{border-radius:999px;padding:4px 11px;font-size:13px;background:var(--chip);border:1px solid var(--line)}
+.badge.ok::before{content:"● ";color:#4C9A6A}.badge.warn::before{content:"● ";color:#C98A3A}.badge.bad::before{content:"● ";color:#C25B52}
+pre{margin:10px 0 0;padding:14px;border-radius:10px;background:var(--page);border:1px solid var(--line);
+  font:12.5px/1.6 var(--mono);overflow:auto;max-height:300px;white-space:pre}
+.right{display:grid;gap:20px;min-width:0}
+.hint{font-size:13px;color:var(--ink2);margin:8px 0 0}
+.toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(20px);opacity:0;background:var(--ink);color:var(--page);
+  padding:9px 16px;border-radius:999px;font-size:14px;transition:.25s;pointer-events:none}
+.toast.on{opacity:1;transform:translateX(-50%)}
+footer{margin-top:28px;color:var(--ink2);font-size:13px;text-align:center}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <h1>ghostty-tint 调色台<small>每开一个面板，换一种安静的颜色</small></h1>
+      <p>挑一个气质，拖动滑杆，点「开新面板」看效果；满意了复制命令，粘贴进终端就装好了。</p>
+    </div>
+    <nav><a href="https://github.com/nevertoday/ghostty-tint">GitHub →</a></nav>
+  </header>
+
+  <div class="grid">
+    <section class="card" aria-label="参数">
+      <h2>气质</h2>
+      <div class="moods" id="moods"></div>
+
+      <div class="ctl"><label>颜色数量 <b id="vCount"></b></label>
+        <input type="range" id="count" min="2" max="32" step="1"><small>8 色够用；常开很多分屏选 12–16</small></div>
+      <div class="ctl"><label>亮度 L <b id="vL"></b></label>
+        <input type="range" id="l" min="0.18" max="0.96" step="0.005"><small>浅色 0.86–0.94 · 深色 0.20–0.30</small></div>
+      <div class="ctl"><label>彩度 C <b id="vC"></b></label>
+        <input type="range" id="c" min="0.005" max="0.09" step="0.001"><small>0.015 近灰 · 0.027 纸感 · 0.05 糖果</small></div>
+      <div class="ctl"><label>起始色相 <b id="vHue"></b></label>
+        <input type="range" id="hue" min="0" max="359" step="1"><small>0 粉红 · 60 杏 · 150 绿 · 240 蓝 · 310 紫</small></div>
+      <div class="ctl"><label>色相跨度 <b id="vSpan"></b></label>
+        <input type="range" id="span" min="30" max="360" step="5"><small>360 全色轮最好分辨；120 一段色相更有主题感</small></div>
+      <label class="toggle"><input type="checkbox" id="dark"> 深色气质（浅色文字 + 亮 ANSI）</label>
+
+      <div class="row2">
+        <label class="field">id<input id="name" value="mine" spellcheck="false"></label>
+        <label class="field">名字<input id="title" value="我的气质 Mine"></label>
+      </div>
+      <label class="field">一句话气质<input id="vibe" value="我自己调的颜色"></label>
+    </section>
+
+    <div class="right">
+      <section class="card" aria-label="预览">
+        <div class="win">
+          <div class="bar" id="bar"><span style="background:#FF5F57"></span><span style="background:#FEBC2E"></span><span style="background:#28C840"></span><em id="barTitle">ghostty</em></div>
+          <div class="panes" id="panes"></div>
+        </div>
+        <div class="actions">
+          <button class="btn primary" id="add">＋ 开新面板 <span style="opacity:.6">⌘D</span></button>
+          <button class="btn" id="close">关掉一个</button>
+          <button class="btn" id="reset">清空重来</button>
+        </div>
+        <p class="hint">新面板按「黄金角」顺序取色：每次在色轮上跳约 137.5°，相邻面板永远差得够远。</p>
+      </section>
+
+      <section class="card" aria-label="色板">
+        <h2>色板</h2>
+        <div class="strips">
+          <div><p>按色相排列（写进文件的顺序）· 点色块复制色值</p><div class="strip" id="stripHue"></div></div>
+          <div><p>面板打开顺序（数字是第几个面板）</p><div class="strip" id="stripOpen"></div></div>
+        </div>
+        <div class="checks" id="checks"></div>
+      </section>
+
+      <section class="card" aria-label="安装">
+        <h2>装进你的终端</h2>
+        <p class="hint" style="margin-top:0">需要先装好 ghostty-tint（一行命令见 GitHub）。复制下面整段，粘贴到终端回车：</p>
+        <pre id="cmd"></pre>
+        <div class="actions">
+          <button class="btn primary" id="copyCmd">复制安装命令</button>
+          <button class="btn" id="copyTint">只复制 .tint 文件</button>
+          <button class="btn" id="copyGen">复制 tint gen 命令</button>
+        </div>
+      </section>
+    </div>
+  </div>
+  <footer>颜色在 OKLCH 空间生成：所有颜色亮度、彩度相同，只有色相不同 —— 所以天然协调，文字在每个面板上一样清楚。</footer>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const MOODS = /*@moods*/[{"id": "paper", "zh": "纸感", "en": "Paper", "vibe": "低饱和暖纸色，像一桌便签", "fg": "#1A1A1A", "dark": false, "bg": ["#EBD6D3", "#EFDFC9", "#ECE5C6", "#DDE7D3", "#D3E5DF", "#D7E2EC", "#E0DAEA", "#EFDCE6"], "names": ["珊瑚粉", "杏桃灰", "沙金灰", "鼠尾草", "青瓷灰", "雾蓝灰", "烟紫灰", "梅子粉"], "params": {"l": 0.908, "c": 0.027, "hue": 27, "span": 360, "dark": false}}, {"id": "mist", "zh": "晨雾", "en": "Mist", "vibe": "冷调雾色，安静专注不累眼", "fg": "#1A1A1A", "dark": false, "bg": ["#D5EFE5", "#D2EFED", "#D2EEF4", "#D5ECF9", "#DBE9FC", "#E2E7FC", "#EAE4FA", "#F1E2F5"], "names": ["薄荷雾", "湖心", "冰川", "晴空", "远山", "月白", "丁香", "藕荷"], "params": {"l": 0.93, "c": 0.03, "hue": 170, "span": 150, "dark": false}}, {"id": "matcha", "zh": "茶室", "en": "Matcha", "vibe": "抹茶麦秆苔藓，木质温润", "fg": "#1A1A1A", "dark": false, "bg": ["#F7D9C9", "#F2DBC4", "#ECDEC2", "#E4E1C3", "#DBE4C7", "#D3E7CD", "#CBE8D5", "#C5E9DE"], "names": ["焙茶", "麦秆", "米糠", "玄米", "抹茶", "新芽", "苔藓", "竹露"], "params": {"l": 0.905, "c": 0.04, "hue": 50, "span": 125, "dark": false}}, {"id": "macaron", "zh": "马卡龙", "en": "Macaron", "vibe": "甜而不腻，开再多也不撞色", "fg": "#1A1A1A", "dark": false, "bg": ["#FFD3D5", "#FED6C4", "#F4DBBA", "#E4E2BB", "#D1E8C6", "#C1EBD7", "#B8EBEA", "#BCE8FA", "#CBE2FF", "#DCDCFF", "#EDD6F8", "#FAD2E8"], "names": ["草莓", "蜜桃", "焦糖", "柠檬", "开心果", "薄荷", "苏打", "天空", "蓝莓", "香芋", "葡萄", "樱花"], "params": {"l": 0.905, "c": 0.052, "hue": 15, "span": 360, "dark": false}}, {"id": "morandi", "zh": "莫兰迪", "en": "Morandi", "vibe": "灰调高级，16 色依旧克制", "fg": "#1A1A1A", "dark": false, "bg": ["#E0C9C8", "#DFCAC2", "#DCCCBE", "#D7CFBD", "#D0D1BE", "#C9D3C2", "#C3D5C8", "#BED5CF", "#BDD5D6", "#BED4DC", "#C2D2E0", "#C8CFE1", "#CFCDE0", "#D5CBDC", "#DBC9D6", "#DFC9CF"], "names": ["豆沙", "陶土", "燕麦", "亚麻", "橄榄", "灰绿", "薄荷灰", "青灰", "雾霾蓝", "牛仔", "灰蓝", "鸢尾", "灰紫", "藕紫", "玫瑰灰", "暮粉"], "params": {"l": 0.855, "c": 0.026, "hue": 20, "span": 360, "dark": false}}, {"id": "midnight", "zh": "夜航", "en": "Midnight", "vibe": "深夜舷窗，暗色也有温度", "fg": "#E6E4DC", "dark": true, "bg": ["#13292B", "#1A2732", "#252332", "#2E202B", "#322020", "#2F2217", "#262716", "#1A291F"], "names": ["深海", "夜空", "星云", "夜樱", "炭火", "琥珀", "夜苔", "松林"], "params": {"l": 0.265, "c": 0.028, "hue": 200, "span": 360, "dark": true}}, {"id": "neon", "zh": "霓虹", "en": "Neon", "vibe": "赛博夜市，深底高彩适合演示", "fg": "#E6E4DC", "dark": true, "bg": ["#1D1E3D", "#2A1936", "#33152A", "#38141B", "#38160A", "#321C00", "#282200", "#182705", "#002A18", "#002826", "#002631", "#08233C"], "names": ["电光蓝", "紫外", "霓虹粉", "赤红", "熔岩", "琥珀", "荧光黄", "激光绿", "矩阵", "深青", "冰蓝", "钴蓝"], "params": {"l": 0.25, "c": 0.058, "hue": 280, "span": 360, "dark": true}}]/*@end*/;
+const LIGHT_FG = "#1A1A1A", DARK_FG = "#E6E4DC";
+const DARK_ANSI = ["#2A2D33","#E07A7A","#8CC79A","#E3B66F","#7FA8E0","#C49BE0","#74C7C2","#D9D7CF",
+  "#6B6F78","#F09A9A","#A8DDB4","#F0CB8A","#A1C2F0","#D8B6F0","#98DDD8","#F2F0EA"];
+const HUE_NAMES = [[40,"红","red"],[65,"橙","orange"],[90,"杏","amber"],[115,"黄","yellow"],[135,"黄绿","lime"],
+  [165,"绿","green"],[190,"青","teal"],[225,"湖蓝","cyan"],[260,"蓝","blue"],[290,"靛","indigo"],[320,"紫","purple"],
+  [355,"粉","pink"],[400,"红","red"]];
+
+/* ---------- 色彩数学：与 tools/tint-gen.py 一致 ---------- */
+const toLin = x => x <= 0.04045 ? x / 12.92 : ((x + 0.055) / 1.055) ** 2.4;
+const toSrgb = x => x <= 0.0031308 ? 12.92 * x : 1.055 * x ** (1 / 2.4) - 0.055;
+function oklchToRgb(L, C, h) {
+  const a = C * Math.cos(h * Math.PI / 180), b = C * Math.sin(h * Math.PI / 180);
+  const l = (L + 0.3963377774 * a + 0.2158037573 * b) ** 3;
+  const m = (L - 0.1055613458 * a - 0.0638541728 * b) ** 3;
+  const s = (L - 0.0894841775 * a - 1.2914855480 * b) ** 3;
+  return [4.0767416621 * l - 3.3077115913 * m + 0.2309699292 * s,
+    -1.2684380046 * l + 2.6097574011 * m - 0.3413193965 * s,
+    -0.0041960863 * l - 0.7034186147 * m + 1.7076147010 * s];
+}
+const inGamut = rgb => rgb.every(v => v >= -1e-6 && v <= 1 + 1e-6);
+function oklchToHex(L, C, h) {
+  let rgb = oklchToRgb(L, C, h);
+  if (!inGamut(rgb)) { let lo = 0, hi = C; for (let i = 0; i < 30; i++) { const mid = (lo + hi) / 2; inGamut(oklchToRgb(L, mid, h)) ? lo = mid : hi = mid; } rgb = oklchToRgb(L, lo, h); }
+  return "#" + rgb.map(v => Math.round(Math.max(0, Math.min(1, toSrgb(Math.max(0, v)))) * 255).toString(16).padStart(2, "0")).join("").toUpperCase();
+}
+function hexToOklab(hx) {
+  const [r, g, b] = [1, 3, 5].map(i => toLin(parseInt(hx.slice(i, i + 2), 16) / 255));
+  const l = Math.cbrt(0.4122214708 * r + 0.5363325363 * g + 0.0514459929 * b);
+  const m = Math.cbrt(0.2119034982 * r + 0.6806995451 * g + 0.1073969566 * b);
+  const s = Math.cbrt(0.0883024619 * r + 0.2817188376 * g + 0.6299787005 * b);
+  return [0.2104542553 * l + 0.7936177850 * m - 0.0040720468 * s, 1.9779984951 * l - 2.4285922050 * m + 0.4505937099 * s, 0.0259040371 * l + 0.7827717662 * m - 0.8086757660 * s];
+}
+const lum = hx => { const [r, g, b] = [1, 3, 5].map(i => toLin(parseInt(hx.slice(i, i + 2), 16) / 255)); return 0.2126 * r + 0.7152 * g + 0.0722 * b; };
+const contrast = (a, b) => { const [x, y] = [lum(a), lum(b)].sort((p, q) => q - p); return (x + 0.05) / (y + 0.05); };
+const gcd = (a, b) => b ? gcd(b, a % b) : a;
+function goldenStep(n) {
+  const t = n * 0.381966; let best = 1, bd = Infinity;
+  for (let k = 1; k < n; k++) if (gcd(k, n) === 1) { const d = Math.abs(k - t); if (d <= bd) { best = k; bd = d; } }
+  return best;
+}
+function spreadOrder(n) {
+  const k = goldenStep(n);
+  if (k === 1 && n >= 4) { const h = Math.ceil(n / 2); return [...Array(n).keys()].map(i => i < h ? 2 * i : 2 * (i - h) + 1); }
+  return [...Array(n).keys()].map(i => (i * k) % n);
+}
+function hueName(h) { h %= 360; if (h < 5) h += 360; return HUE_NAMES.find(([lim]) => h <= lim).slice(1); }
+
+/* ---------- 状态 ---------- */
+const $ = id => document.getElementById(id);
+const S = { mood: "paper", exact: true, count: 8, l: .908, c: .027, hue: 27, span: 360, dark: false, opened: 4 };
+let palette = [];  // [{hex, zh, en}]
+
+function build() {
+  const m = MOODS.find(x => x.id === S.mood);
+  if (S.exact && m && m.bg.length === S.count) {
+    palette = m.bg.map((hex, i) => ({ hex, zh: m.names[i] || hueName(0)[0], en: "" }));
+  } else {
+    const n = S.count, hues = S.span >= 360 ? [...Array(n).keys()].map(i => S.hue + i * 360 / n)
+      : n === 1 ? [S.hue] : [...Array(n).keys()].map(i => S.hue + i * S.span / (n - 1));
+    const used = {};
+    palette = hues.map(h => { const [zh, en] = hueName(h); used[en] = (used[en] || 0) + 1; return { hex: oklchToHex(S.l, S.c, h % 360), zh, en: used[en] > 1 ? en + used[en] : en }; });
+  }
+}
+const fg = () => S.dark ? DARK_FG : LIGHT_FG;
+
+const LINES = [
+  ['<span class="dim">~/app ❯</span> claude', '', '✻ 重构 auth 模块', '<span class="dim">  ⎿ 读取 session.ts</span>', '<span class="dim">  ⎿ 42 tests passed</span>'],
+  ['<span class="dim">~/api ❯</span> npm run dev', '<span class="dim">ready on :3000</span>', '<span class="dim">GET /users 200</span>'],
+  ['<span class="dim">~/web ❯</span> git log', '<span class="dim">a1f3c feat: tint</span>', '<span class="dim">9be20 fix: lock</span>'],
+  ['<span class="dim">~ ❯</span> codex', '<span class="dim">› 写单元测试</span>'],
+  ['<span class="dim">~/db ❯</span> psql', '<span class="dim">app=# \\dt</span>'],
+  ['<span class="dim">~ ❯</span> htop'], ['<span class="dim">~/docs ❯</span> vim README.md'], ['<span class="dim">~ ❯</span> tail -f app.log'],
+  ['<span class="dim">~ ❯</span> ssh prod'],
+];
+
+function render() {
+  build();
+  const n = palette.length, order = spreadOrder(n), F = fg();
+  $("vCount").textContent = S.count + " 色"; $("vL").textContent = S.l.toFixed(3); $("vC").textContent = S.c.toFixed(3);
+  $("vHue").textContent = Math.round(S.hue) + "°"; $("vSpan").textContent = S.span >= 360 ? "360° 全色轮" : S.span + "°";
+  for (const k of ["count", "l", "c", "hue", "span"]) $(k).value = S[k];
+  $("dark").checked = S.dark;
+  document.querySelectorAll(".mood").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.id === S.mood && S.exact)));
+
+  // 窗口
+  const chrome = S.dark ? "#1B1C20" : "#F8F7F4";
+  $("bar").style.background = chrome; $("barTitle").style.color = S.dark ? "#8E9097" : "#9A968C";
+  $("barTitle").textContent = `ghostty — ${S.opened} pane${S.opened > 1 ? "s" : ""}`;
+  const P = $("panes"), k = S.opened, cols = k <= 1 ? 1 : k <= 4 ? 2 : 3, rows = Math.ceil(k / cols);
+  P.style.background = S.dark ? "#0E0F12" : "#D9D6CE";
+  P.style.gridTemplateColumns = `repeat(${cols},1fr)`; P.style.gridTemplateRows = `repeat(${rows},1fr)`;
+  while (P.children.length > k) P.lastChild.remove();
+  while (P.children.length < k) { const d = document.createElement("div"); d.dataset.new = "1"; P.appendChild(d); }
+  [...P.children].forEach((el, i) => {
+    const c = palette[order[i % n]];
+    el.className = el.dataset.new ? "pane new" : "pane"; delete el.dataset.new; el.style.background = c.hex; el.style.color = F;
+    const span = i === k - 1 ? cols * rows - k + 1 : 1; el.style.gridColumn = span > 1 ? `span ${span}` : "";
+    el.innerHTML = (LINES[i % LINES.length]).slice(0, rows >= 3 ? 3 : 5).map(x => `<div>${x || "&nbsp;"}</div>`).join("") +
+      `<span class="no">${i + 1}</span><span class="tag">${c.zh} · ${c.hex}</span>`;
+  });
+
+  // 色板
+  const strip = (el, items) => { el.innerHTML = items.map(([c, lab]) => `<div style="background:${c.hex}" title="${c.zh} ${c.hex}" data-hex="${c.hex}">${lab != null ? `<b>${lab}</b>` : ""}</div>`).join(""); };
+  strip($("stripHue"), palette.map(c => [c, null]));
+  strip($("stripOpen"), order.map((idx, i) => [palette[idx], n <= 16 || i % 2 === 0 ? i + 1 : ""]));
+
+  // 体检
+  const worst = Math.min(...palette.map(c => contrast(F, c.hex)));
+  let minDe = Infinity;
+  if (n > 1) for (let i = 0; i < n; i++) { const a = hexToOklab(palette[order[i]].hex), b = hexToOklab(palette[order[(i + 1) % n]].hex); minDe = Math.min(minDe, Math.hypot(a[0] - b[0], a[1] - b[1], a[2] - b[2]) * 100); }
+  const ck = [[worst >= 7 ? "ok" : worst >= 4.5 ? "warn" : "bad", `文字对比度 ≥ ${worst.toFixed(1)}${worst >= 7 ? "（AAA 舒适）" : worst >= 4.5 ? "（AA 可用）" : "（偏低：调亮度）"}`]];
+  if (n > 1) ck.push([minDe >= 5 ? "ok" : minDe >= 3 ? "ok" : "warn", `相邻面板色差 ΔE ≥ ${minDe.toFixed(1)}${minDe >= 3 ? "（一眼可分）" : "（有点像：加彩度或跨度）"}`]);
+  ck.push(["ok", `步长 ${goldenStep(n)} · 打开顺序 ${order.slice(0, 6).map(i => i + 1).join("→")}${n > 6 ? "…" : ""}`]);
+  $("checks").innerHTML = ck.map(([cl, t]) => `<span class="badge ${cl}">${t}</span>`).join("");
+
+  // 输出
+  $("cmd").textContent = installCmd();
+}
+
+function tintText() {
+  const name = $("title").value.trim() || $("name").value, vibe = $("vibe").value.trim() || "我的气质", F = fg();
+  const L = ["# ghostty-tint mood · 来自 ghostty-tint 调色台", `# 参数：L=${S.l} C=${S.c} hue=${Math.round(S.hue)} span=${S.span} count=${palette.length}`, "",
+    `name  ${name}`, `vibe  ${vibe}`, `fg    ${F}`];
+  if (S.dark) L.push(`cursor ${F}`);
+  L.push("", ...palette.map(c => `bg    ${c.hex}  ${c.zh}${c.en ? "  " + c.en : ""}`));
+  if (S.dark) L.push("", ...DARK_ANSI.map((h, i) => `ansi  ${String(i).padEnd(2)} ${h}`));
+  return L.join("\n") + "\n";
+}
+const safeId = () => ($("name").value.trim().replace(/[^\w-]/g, "") || "mine");
+const installCmd = () => `cat > ~/.config/ghostty-tint/moods/${safeId()}.tint <<'TINT'\n${tintText()}TINT\ntint mood ${safeId()}`;
+const genCmd = () => `tint gen --name ${safeId()} --count ${S.count} --l ${S.l} --c ${S.c} --hue ${Math.round(S.hue)} --span ${S.span}${S.dark ? " --dark" : ""} -o ~/.config/ghostty-tint/moods/${safeId()}.tint`;
+
+function toast(t) { const el = $("toast"); el.textContent = t; el.classList.add("on"); clearTimeout(toast.t); toast.t = setTimeout(() => el.classList.remove("on"), 1600); }
+async function copy(text, msg) { try { await navigator.clipboard.writeText(text); toast(msg); } catch { toast("复制失败，请手动选中"); } }
+
+/* ---------- 交互 ---------- */
+$("moods").innerHTML = MOODS.map(m => `<button class="mood" data-id="${m.id}"><i style="background:linear-gradient(135deg,${m.bg[0]} 0 33%,${m.bg[Math.floor(m.bg.length / 3)]} 33% 66%,${m.bg[Math.floor(m.bg.length * 2 / 3)]} 66%)"></i>${m.zh}</button>`).join("");
+$("moods").addEventListener("click", ev => {
+  const b = ev.target.closest(".mood"); if (!b) return;
+  const m = MOODS.find(x => x.id === b.dataset.id); const p = m.params || {};
+  Object.assign(S, { mood: m.id, exact: true, count: m.bg.length, l: p.l ?? S.l, c: p.c ?? S.c, hue: p.hue ?? S.hue, span: p.span ?? S.span, dark: m.dark });
+  $("name").value = m.id + "-mine"; $("title").value = `${m.zh} ${m.en}`; $("vibe").value = m.vibe;
+  render();
+});
+for (const k of ["count", "l", "c", "hue", "span"]) $(k).addEventListener("input", e => { S[k] = +e.target.value; if (k !== "count") S.exact = false; render(); });
+$("dark").addEventListener("change", e => {
+  S.dark = e.target.checked; S.exact = false;
+  if (S.dark && S.l > .5) S.l = .26; if (!S.dark && S.l < .5) S.l = .9; render();
+});
+$("add").onclick = () => { S.opened = Math.min(9, S.opened + 1); render(); };
+$("close").onclick = () => { S.opened = Math.max(1, S.opened - 1); render(); };
+$("reset").onclick = () => { S.opened = 1; render(); };
+document.addEventListener("keydown", e => { if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "d") { e.preventDefault(); $("add").click(); } });
+$("copyCmd").onclick = () => copy(installCmd(), "已复制，粘贴到终端回车即可");
+$("copyTint").onclick = () => copy(tintText(), "已复制 .tint 内容");
+$("copyGen").onclick = () => copy(genCmd(), "已复制 tint gen 命令");
+document.addEventListener("click", e => { const d = e.target.closest(".strip div"); if (d) copy(d.dataset.hex, d.dataset.hex + " 已复制"); });
+["name", "title", "vibe"].forEach(id => $(id).addEventListener("input", () => { $("cmd").textContent = installCmd(); }));
+document.querySelector('.mood[data-id="paper"]').click();
+</script>
+</body>
+</html>

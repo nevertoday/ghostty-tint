@@ -1,0 +1,20 @@
+# ghostty-tint mood · 由 tools/tint-gen.py 生成，可随意手改
+# 参数：L=0.905 C=0.052 hue=15 span=360 count=12
+# 格式：bg  #RRGGBB  名字  别名…   （按色相顺序排列，tint 会自动分散取色）
+
+name  马卡龙 Macaron
+vibe  甜而不腻，开再多也不撞色
+fg    #1A1A1A
+
+bg    #FFD3D5  草莓    strawberry red
+bg    #FED6C4  蜜桃    peach orange
+bg    #F4DBBA  焦糖    caramel amber
+bg    #E4E2BB  柠檬    lemon yellow
+bg    #D1E8C6  开心果   pistachio green
+bg    #C1EBD7  薄荷    mint teal
+bg    #B8EBEA  苏打    soda cyan
+bg    #BCE8FA  天空    sky blue
+bg    #CBE2FF  蓝莓    blueberry
+bg    #DCDCFF  香芋    taro indigo
+bg    #EDD6F8  葡萄    grape purple
+bg    #FAD2E8  樱花    sakura pink

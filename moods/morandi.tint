@@ -1,0 +1,24 @@
+# ghostty-tint mood · 由 tools/tint-gen.py 生成，可随意手改
+# 参数：L=0.855 C=0.026 hue=20 span=360 count=16
+# 格式：bg  #RRGGBB  名字  别名…   （按色相顺序排列，tint 会自动分散取色）
+
+name  莫兰迪 Morandi
+vibe  灰调高级，16 色依旧克制
+fg    #1A1A1A
+
+bg    #E0C9C8  豆沙    bean red
+bg    #DFCAC2  陶土    clay orange
+bg    #DCCCBE  燕麦    oat amber
+bg    #D7CFBD  亚麻    linen yellow
+bg    #D0D1BE  橄榄    olive lime
+bg    #C9D3C2  灰绿    sage green
+bg    #C3D5C8  薄荷灰   mint
+bg    #BED5CF  青灰    slate teal
+bg    #BDD5D6  雾霾蓝   haze cyan
+bg    #BED4DC  牛仔    denim blue
+bg    #C2D2E0  灰蓝    steel
+bg    #C8CFE1  鸢尾    iris indigo
+bg    #CFCDE0  灰紫    mauve purple
+bg    #D5CBDC  藕紫    heather
+bg    #DBC9D6  玫瑰灰   rose pink
+bg    #DFC9CF  暮粉    dusk

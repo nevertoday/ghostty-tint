@@ -1,0 +1,16 @@
+# ghostty-tint mood · 由 tools/tint-gen.py 生成，可随意手改
+# 参数：L=0.93 C=0.03 hue=170 span=150 count=8
+# 格式：bg  #RRGGBB  名字  别名…   （按色相顺序排列，tint 会自动分散取色）
+
+name  晨雾 Mist
+vibe  冷调雾色，安静专注不累眼
+fg    #1A1A1A
+
+bg    #D5EFE5  薄荷雾   mint teal
+bg    #D2EFED  湖心    lake cyan
+bg    #D2EEF4  冰川    glacier
+bg    #D5ECF9  晴空    sky blue
+bg    #DBE9FC  远山    haze
+bg    #E2E7FC  月白    moon indigo
+bg    #EAE4FA  丁香    lilac purple
+bg    #F1E2F5  藕荷    lotus pink

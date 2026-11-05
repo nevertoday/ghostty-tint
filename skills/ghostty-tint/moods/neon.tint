@@ -1,0 +1,39 @@
+# ghostty-tint mood · 由 tools/tint-gen.py 生成，可随意手改
+# 参数：L=0.25 C=0.058 hue=280 span=360 count=12
+# 格式：bg  #RRGGBB  名字  别名…   （按色相顺序排列，tint 会自动分散取色）
+
+name  霓虹 Neon
+vibe  赛博夜市，深底高彩适合演示
+fg    #E6E4DC
+cursor #E6E4DC
+
+bg    #1D1E3D  电光蓝   volt indigo
+bg    #2A1936  紫外    uv purple
+bg    #33152A  霓虹粉   neonpink pink
+bg    #38141B  赤红    crimson red
+bg    #38160A  熔岩    lava orange
+bg    #321C00  琥珀    amber
+bg    #282200  荧光黄   acid yellow
+bg    #182705  激光绿   laser lime
+bg    #002A18  矩阵    matrix green
+bg    #002826  深青    deepteal teal
+bg    #002631  冰蓝    ice cyan
+bg    #08233C  钴蓝    cobalt blue
+
+# 深色气质顺带换一套亮一点的 ANSI 16 色，保证 ls/git 输出看得清
+ansi  0  #2A2D33
+ansi  1  #E07A7A
+ansi  2  #8CC79A
+ansi  3  #E3B66F
+ansi  4  #7FA8E0
+ansi  5  #C49BE0
+ansi  6  #74C7C2
+ansi  7  #D9D7CF
+ansi  8  #6B6F78
+ansi  9  #F09A9A
+ansi  10 #A8DDB4
+ansi  11 #F0CB8A
+ansi  12 #A1C2F0
+ansi  13 #D8B6F0
+ansi  14 #98DDD8
+ansi  15 #F2F0EA

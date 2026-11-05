@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>ghostty-tint gif stage</title>
+<!-- 逐帧渲染舞台：stage.html#scene=split&t=1.25，由 tools/make_gifs.py 截图合成 GIF -->
+<style>
+:root{--mono:Menlo,"SF Mono",ui-monospace,monospace;--sans:-apple-system,"PingFang SC","Hiragino Sans GB",sans-serif}
+*{box-sizing:border-box;margin:0}
+html,body{width:900px;height:540px;overflow:hidden;background:#F1EFEA}
+#win{position:absolute;left:30px;top:22px;width:840px;height:440px;border-radius:12px;overflow:hidden;
+  box-shadow:0 16px 36px -14px rgba(58,51,38,.32),0 0 0 1px rgba(0,0,0,.05)}
+#bar{position:absolute;left:0;top:0;right:0;height:32px}
+#bar i{position:absolute;top:10px;width:12px;height:12px;border-radius:50%}
+#title{position:absolute;left:0;right:0;top:8px;text-align:center;font:12px var(--sans)}
+#area{position:absolute;left:0;top:32px;right:0;bottom:0}
+.pane{position:absolute;overflow:hidden;padding:12px 14px;font:12.5px/20px var(--mono);white-space:pre}
+.pane .dim{opacity:.5}.pane .soft{opacity:.62}
+.pane .tag{position:absolute;right:10px;bottom:7px;font:10.5px var(--sans);opacity:.55}
+.cur{display:inline-block;width:7px;height:15px;vertical-align:-3px;background:currentColor;opacity:.75}
+#cap{position:absolute;left:34px;top:478px;font:600 19px var(--sans);color:#2B2A27;white-space:nowrap}
+#sub{position:absolute;left:34px;top:507px;font:13px var(--sans);color:#8A867D;white-space:nowrap}
+#key{position:absolute;top:480px;left:0;font:600 15px var(--sans);color:#2B2A27;background:#FBFAF8;border:1px solid #D8D4CB;
+  border-bottom-width:3px;border-radius:8px;padding:5px 11px}
+#strip{position:absolute;right:34px;top:484px;display:flex;gap:3px}
+#strip b{display:block;height:30px;border-radius:5px}
+.chips{display:flex;gap:6px;margin:4px 0 2px}
+.chips span{display:block;width:50px;text-align:center;font:10.5px/14px var(--sans)}
+.chips span b{display:block;height:24px;border-radius:5px;margin-bottom:3px;border:1px solid rgba(0,0,0,.06)}
+#fade{position:absolute;inset:0;background:#F1EFEA;pointer-events:none}
+</style>
+</head>
+<body>
+<div id="win"><div id="bar"><i style="left:14px;background:#FF5F57"></i><i style="left:32px;background:#FEBC2E"></i><i style="left:50px;background:#28C840"></i><div id="title"></div></div><div id="area"></div></div>
+<div id="cap"></div><div id="sub"></div><div id="key">⌘ D</div><div id="strip"></div><div id="fade"></div>
+<script>
+const DATA = /*@data*/null/*@end*/;
+const M = Object.fromEntries(DATA.moods.map(m => [m.id, m]));
+const DEFAULT_BG = "#FCFBF9";
+
+/* ---------- 小工具 ---------- */
+const clamp = (x, a = 0, b = 1) => Math.max(a, Math.min(b, x));
+const ease = x => { x = clamp(x); return x < .5 ? 4 * x * x * x : 1 - (-2 * x + 2) ** 3 / 2; };
+const prog = (t, t0, d) => ease((t - t0) / d);
+const hex2 = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16));
+const mix = (a, b, p) => { const A = hex2(a), B = hex2(b); return "#" + A.map((v, i) => Math.round(v + (B[i] - v) * p).toString(16).padStart(2, "0")).join(""); };
+const lerp = (a, b, p) => a + (b - a) * p;
+const typed = (s, t, t0, cps = 16) => { const n = Math.floor((t - t0) * cps); return n <= 0 ? "" : [...s].slice(0, n).join(""); };
+const esc = s => s.replace(/&/g, "&amp;").replace(/</g, "&lt;");
+const blink = t => (Math.floor(t * 2.2) % 2 === 0);
+
+// 在一段气质切换序列里，求时刻 t 的「混合气质」
+function moodAt(t, switches) { // switches: [[t0, id], ...] 第一项 t0 = -1
+  let cur = switches[0][1], prev = cur, p = 1;
+  for (const [t0, id] of switches) if (t >= t0) { prev = cur; cur = id; p = prog(t, t0, .55); }
+  const a = M[prev], b = M[cur];
+  return {
+    id: cur, mood: b,
+    pane: i => mix(a.spread[i % a.spread.length], b.spread[i % b.spread.length], p),
+    name: i => b.spread_names[i % b.spread.length], hexOf: i => b.spread[i % b.spread.length],
+    fg: mix(a.fg, b.fg, p), chrome: mix(a.chrome, b.chrome, p), ink: mix(a.chrome_ink, b.chrome_ink, p),
+    div: mix(a.divider, b.divider, p),
+  };
+}
+
+function frame({ panes, mood, title, cap, sub, key, t, fadeIn = 0, fadeOut = 99, stripMood }) {
+  document.getElementById("bar").style.background = mood.chrome;
+  const tt = document.getElementById("title"); tt.textContent = title; tt.style.color = mood.ink;
+  const area = document.getElementById("area"); area.style.background = mood.div;
+  area.innerHTML = panes.map(p => {
+    const W = 840, H = 408;
+    const x = p.r[0] * W, y = p.r[1] * H, w = p.r[2] * W, h = p.r[3] * H;
+    if (w < 1 || h < 1) return "";
+    return `<div class="pane" style="left:${x + 1}px;top:${y + 1}px;width:${w - 2}px;height:${h - 2}px;background:${p.bg};color:${p.fg}">${p.html}${p.tag ? `<span class="tag">${p.tag}</span>` : ""}</div>`;
+  }).join("");
+  document.getElementById("cap").textContent = cap;
+  document.getElementById("sub").textContent = sub;
+  const k = document.getElementById("key");
+  k.style.opacity = key ? 1 : 0; k.style.transform = key > .5 ? "translateY(2px)" : "none";
+  k.style.left = (34 + document.getElementById("cap").getBoundingClientRect().width + 14) + "px";
+  const sm = stripMood || mood.mood;
+  document.getElementById("strip").innerHTML = sm.bg.map(c => `<b style="background:${c};width:${Math.min(26, 230 / sm.bg.length)}px"></b>`).join("");
+  document.getElementById("fade").style.opacity = Math.max(1 - clamp(t / fadeIn), clamp((t - fadeOut) / .45));
+}
+
+/* ---------- 场景一：⌘D 开分屏 → 自动换色 → 一键换气质 ---------- */
+const SPLIT = {
+  dur: 12.6,
+  splits: [1.1, 2.1, 3.1, 4.1, 5.1],
+  layouts: [
+    [[0, 0, 1, 1]],
+    [[0, 0, .5, 1], [.5, 0, .5, 1]],
+    [[0, 0, .5, 1], [.5, 0, .5, .5], [.5, .5, .5, .5]],
+    [[0, 0, .5, .5], [.5, 0, .5, .5], [.5, .5, .5, .5], [0, .5, .5, .5]],
+    [[0, 0, .5, .5], [.5, 0, .25, .5], [.5, .5, .5, .5], [0, .5, .5, .5], [.75, 0, .25, .5]],
+    [[0, 0, .5, .5], [.5, 0, .25, .5], [.5, .5, .25, .5], [0, .5, .5, .5], [.75, 0, .25, .5], [.75, .5, .25, .5]],
+  ],
+  starts: [null, [1, 0, 0, 1], [.5, 1, .5, 0], [0, 1, .5, 0], [1, 0, 0, .5], [1, .5, 0, .5]],
+  lines: [
+    [["~/app ❯ ", "claude"], ["", ""], ["", "✻ 重构 auth 模块"], ["", "  ⎿ 读取 session.ts", 1], ["", "  ⎿ 42 tests passed", 1]],
+    [["~/api ❯ ", "npm run dev"], ["", "ready on :3000", 1], ["", "GET /users 200", 1]],
+    [["~/web ❯ ", "git log"], ["", "a1f3c feat: tint", 1], ["", "9be20 fix: lock", 1]],
+    [["~ ❯ ", "codex"], ["", "› 写单元测试", 1]],
+    [["~ ❯ ", "htop"]],
+    [],
+  ],
+  moods: [[-1, "paper"], [7.0, "neon"], [8.95, "macaron"], [10.9, "paper"]],
+  cmds: [[5.9, 6.75, "neon"], [7.85, 8.7, "macaron"], [9.8, 10.65, "paper"]],
+};
+
+function sceneSplit(t) {
+  const S = SPLIT, mood = moodAt(t, S.moods);
+  const appear = [0, ...S.splits];
+  let n = 1; for (const s of S.splits) if (t >= s) n++;
+  const p = n > 1 ? prog(t, appear[n - 1], .38) : 1;
+  const panes = [];
+  for (let i = 0; i < n; i++) {
+    const to = S.layouts[n - 1][i];
+    const from = i === n - 1 && n > 1 ? S.starts[i] : S.layouts[Math.max(0, n - 2)][i] || to;
+    const r = n === 1 ? to : to.map((v, j) => lerp(from[j], v, p));
+    // 新 shell 启动后 0.4s 才上色：先是主题默认底色，再渐变到 tint
+    const tint = prog(t, appear[i] + .42, .35);
+    const bg = i === 0 ? mood.pane(0) : mix(DEFAULT_BG, mood.pane(i), tint);
+    const fg = i === 0 || tint > .5 ? mood.fg : M.paper.fg;
+    let html = "";
+    const t0 = appear[i] + .25;
+    if (i < 5) {
+      const L = S.lines[i];
+      const ty = typed(L[0][1], t, t0 + .2, 14);
+      const done = ty.length === [...L[0][1]].length;
+      html += `<span class="dim">${esc(L[0][0])}</span>${esc(ty)}${!done && t > t0 ? '<span class="cur"></span>' : ""}\n`;
+      const tDone = t0 + .2 + [...L[0][1]].length / 14;
+      L.slice(1).forEach(([, s, soft], k) => { if (t > tDone + .25 + k * .22) html += `<span class="${soft ? "soft" : ""}">${esc(s)}</span>\n`; });
+    } else { // 最后一个面板：输入 tint mood 命令
+      const rows = [];
+      let cur = "";
+      let active = true;
+      for (const [ts, te, id] of S.cmds) {
+        const cmd = `tint mood ${id}`;
+        if (t < ts) break;
+        if (t < te) { cur = typed(cmd, t, ts, 19); break; }
+        rows.push(`<span class="dim">~ ❯ </span>${cmd}`, `<span class="soft">  已切换到 ${id}</span>`);
+        cur = "";
+      }
+      const keep = rows.slice(-4);
+      html = keep.join("\n") + (keep.length ? "\n" : "") + `<span class="dim">~ ❯ </span>${esc(cur)}${blink(t) || cur ? '<span class="cur"></span>' : ""}`;
+    }
+    const tag = (i === 0 || tint > .6) ? `${mood.name(i)} · ${mood.hexOf(i)}` : "";
+    panes.push({ r, bg, fg, html, tag });
+  }
+  let cap = "每按一次 ⌘D，新面板自动换一种颜色", sub = "低饱和 · 同亮度 · 黄金角取色，相邻面板永不撞色";
+  if (t >= 5.9) { cap = "tint mood neon"; sub = "一条命令换气质 · 深色也有温度"; }
+  if (t >= 7.85) { cap = "tint mood macaron"; sub = "12 色马卡龙 · 开再多也不撞色"; }
+  if (t >= 9.8) { cap = "tint mood paper"; sub = "回到默认纸感 · 共 7 种气质，颜色数量随你"; }
+  let key = 0; for (const s of S.splits) if (t > s - .3 && t < s + .25) key = t > s - .08 && t < s + .12 ? 1 : .4;
+  if (t < .5) key = 0;
+  frame({ panes, mood, title: `ghostty — ${n} pane${n > 1 ? "s" : ""}`, cap, sub, key, t, fadeIn: .35, fadeOut: S.dur - .45 });
+}
+
+/* ---------- 场景二：AI Skill，一句话要一种气质 ---------- */
+const SKILL = {
+  dur: 11.2,
+  apply: 7.1,
+  layout: [[0, 0, .6, 1], [.6, 0, .4, .5], [.6, .5, .4, .5]],
+};
+function sceneSkill(t) {
+  const S = SKILL, K = M.kyoto;
+  const mood = moodAt(t, [[-1, "paper"], [S.apply, "kyoto"]]);
+  const ask = "我想要京都秋天寺庙的感觉，8 个颜色";
+  const tAsk = .55, tAskEnd = tAsk + [...ask].length / 9;
+  const ai = [
+    [tAskEnd + .5, "⏺", "读取 ghostty-tint skill"],
+    [tAskEnd + 1.0, "⏺", "气质 → 亮度 0.89 · 彩度 0.045 · 色相 20°→130°"],
+    [tAskEnd + 1.35, " ", "  枫叶的红 → 旧木的金 → 苔庭的绿"],
+    [tAskEnd + 1.9, "⏺", "生成 8 色 · 体检 ✓ 对比度 12.3 · 色差 ΔE 3.5"],
+  ];
+  const tChips = tAskEnd + 2.3;
+  let h = `<span class="dim">~/ ❯ </span>claude\n\n`;
+  const ty = typed(ask, t, tAsk, 9);
+  h += `<b>&gt; </b>${esc(ty)}${t < tAskEnd + .3 ? '<span class="cur"></span>' : ""}\n`;
+  for (const [t0, b, s] of ai) if (t > t0) h += `\n${b} <span class="${b === " " ? "soft" : ""}">${esc(s)}</span>`;
+  if (t > tChips) {
+    const shown = Math.min(K.bg.length, Math.floor((t - tChips) / .12) + 1);
+    h += `\n<div class="chips">` + K.bg.slice(0, shown).map((c, i) => `<span><b style="background:${c}"></b>${K.names[i]}</span>`).join("") + `</div>`;
+  }
+  if (t > S.apply - .35) h += `⏺ <span>tint mood kyoto</span>  <span class="soft">✓ 已应用</span>`;
+  if (t > S.apply + .9) h += `\n\n<span class="soft">  还可以试试：晨雾 mist · 夜航 midnight · 茶室 matcha</span>`;
+  const right = [
+    `<span class="dim">~/api ❯ </span>npm run dev\n<span class="soft">ready on :3000</span>`,
+    `<span class="dim">~/web ❯ </span>git log\n<span class="soft">a1f3c feat: tint</span>`,
+  ];
+  const panes = S.layout.map((r, i) => {
+    // 应用时三个面板依次换色
+    const local = moodAt(t, [[-1, "paper"], [S.apply + i * .18, "kyoto"]]);
+    return { r, bg: local.pane(i), fg: local.fg, html: i === 0 ? h : right[i - 1], tag: `${local.name(i)} · ${local.hexOf(i)}` };
+  });
+  const cap = "装上 Skill，一句话要一种气质";
+  const sub = t < S.apply ? "AI 把描述翻译成 OKLCH 参数 · 起名 · 体检" : "京都秋 Kyoto · 8 色 · 枫红 朱鹭 柿色 香木 金阁 稻穗 抹茶 苔庭";
+  frame({ panes, mood, title: "ghostty — claude", cap, sub, key: 0, t, fadeIn: .35, fadeOut: S.dur - .45, stripMood: t < S.apply ? M.paper : K });
+}
+
+/* ---------- 入口 ---------- */
+const q = new URLSearchParams(location.hash.slice(1));
+const scene = q.get("scene") || "split", T = +(q.get("t") || 0);
+(scene === "skill" ? sceneSkill : sceneSplit)(T);
+window.SCENES = { split: SPLIT.dur, skill: SKILL.dur };
+</script>
+</body>
+</html>

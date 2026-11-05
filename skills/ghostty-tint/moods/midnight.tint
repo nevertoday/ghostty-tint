@@ -1,0 +1,35 @@
+# ghostty-tint mood · 由 tools/tint-gen.py 生成，可随意手改
+# 参数：L=0.265 C=0.028 hue=200 span=360 count=8
+# 格式：bg  #RRGGBB  名字  别名…   （按色相顺序排列，tint 会自动分散取色）
+
+name  夜航 Midnight
+vibe  深夜舷窗，暗色也有温度
+fg    #E6E4DC
+cursor #E6E4DC
+
+bg    #13292B  深海    deepsea teal
+bg    #1A2732  夜空    nightsky blue
+bg    #252332  星云    nebula purple
+bg    #2E202B  夜樱    nightbloom pink
+bg    #322020  炭火    ember red
+bg    #2F2217  琥珀    amber orange
+bg    #262716  夜苔    moss yellow
+bg    #1A291F  松林    pine green
+
+# 深色气质顺带换一套亮一点的 ANSI 16 色，保证 ls/git 输出看得清
+ansi  0  #2A2D33
+ansi  1  #E07A7A
+ansi  2  #8CC79A
+ansi  3  #E3B66F
+ansi  4  #7FA8E0
+ansi  5  #C49BE0
+ansi  6  #74C7C2
+ansi  7  #D9D7CF
+ansi  8  #6B6F78
+ansi  9  #F09A9A
+ansi  10 #A8DDB4
+ansi  11 #F0CB8A
+ansi  12 #A1C2F0
+ansi  13 #D8B6F0
+ansi  14 #98DDD8
+ansi  15 #F2F0EA

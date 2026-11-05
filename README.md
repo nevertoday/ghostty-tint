@@ -16,7 +16,7 @@
 ![shell](https://img.shields.io/badge/zsh%20%7C%20bash-✓-8A9A8C?style=flat-square)
 ![startup](https://img.shields.io/badge/启动开销-~5ms-8A9A8C?style=flat-square)
 ![colors](https://img.shields.io/badge/颜色数量-随你-D7B9C8?style=flat-square)
-![license](https://img.shields.io/badge/license-MIT-8A9A8C?style=flat-square)
+![license](https://img.shields.io/badge/license-PolyForm%20Noncommercial-8A9A8C?style=flat-square)
 
 </div>
 
@@ -222,8 +222,13 @@ PROMPT.md            AI 话术
 
 ## 🙌 致谢 & 贡献
 
-默认的「纸感」八色来自作者日常使用的 Otty Paper 浅色主题。欢迎 PR 你调出来的气质：放进 `moods/`，跑一下 `build.py`，就会出现在图鉴里。
+默认的「纸感」八色来自作者日常使用的 Otty Paper 浅色主题。欢迎提交你调出来的气质：放进 `moods/`，跑一下 `build.py`，就会出现在图鉴里。
 
 ## 📄 License
 
-[MIT](LICENSE)
+**非商用免费，商用必须单独授权。** 本项目（脚本、气质、Skill、话术和文档）采用 [PolyForm Noncommercial 1.0.0](LICENSE)，源码公开，但不属于 OSI 定义的开源软件。
+
+- **免费：** 个人学习、兴趣项目，在自己的电脑上给自己的终端配色；截图录屏发个人账号分享（广告、商单、带货除外）；非商用地修改和转发，须附上 LICENSE。
+- **需要授权：** 在收费工作、公司或团队内部使用，集成进商业产品，或用于付费课程和社群。个人小范围商用一般可以谈，机构使用须签书面协议。
+
+详见 [COMMERCIAL.md](COMMERCIAL.md)。Copyright (c) 2026 [小小东 Xiaoxiaodong](https://x.com/xiaoxiaodong01)。

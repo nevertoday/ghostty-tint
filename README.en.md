@@ -91,4 +91,6 @@ Works in any terminal that supports OSC 11 with `TINT_ANY_TERM=1`. tmux passthro
 
 ## License
 
-[MIT](LICENSE)
+**Free for noncommercial use; commercial use needs separate written permission.** ghostty-tint is licensed under the [PolyForm Noncommercial License 1.0.0](LICENSE). The source is public, but it is not OSI open source. Personal and hobby use on your own machine is free; using it in paid work, inside a company or team, in a commercial product, or in paid courses needs a licence. See [COMMERCIAL.md](COMMERCIAL.md).
+
+Copyright (c) 2026 [小小东 Xiaoxiaodong](https://x.com/xiaoxiaodong01)

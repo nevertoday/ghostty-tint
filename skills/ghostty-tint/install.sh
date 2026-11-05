@@ -71,6 +71,7 @@ mkdir -p "$DEST/moods"
 cp "$SRC/tint.sh" "$DEST/tint.sh"
 cp "$SRC/tools/tint-gen.py" "$DEST/tint-gen.py"
 cp "$SRC/install.sh" "$DEST/install.sh" # 方便以后 bash ~/.config/ghostty-tint/install.sh --uninstall
+cp "$SRC/LICENSE" "$SRC/COMMERCIAL.md" "$DEST/" 2>/dev/null || true
 # 内置气质每次覆盖更新；你自己生成的 .tint 文件不会被动到
 cp "$SRC"/moods/*.tint "$DEST/moods/"
 say "核心文件 → ${DEST/#$HOME/~}（$(ls "$SRC"/moods/*.tint | wc -l | tr -d ' ') 种内置气质）"
@@ -102,6 +103,7 @@ if (( skill )); then
     [[ $t -ef $SRC ]] && { say "Skill 已在 ${t/#$HOME/~}"; continue; }
     cp "$skill_md" "$t/SKILL.md"
     cp "$SRC/tint.sh" "$SRC/install.sh" "$t/"
+    cp "$SRC/LICENSE" "$SRC/COMMERCIAL.md" "$t/" 2>/dev/null || true
     cp "$SRC/tools/tint-gen.py" "$t/tools/"
     cp "$SRC"/moods/*.tint "$t/moods/"
     say "Skill → ${t/#$HOME/~}"
@@ -118,4 +120,5 @@ echo
 echo "  完成！新开一个 Ghostty 面板（⌘D / ⌘T）就能看到颜色。"
 echo "  当前面板立即生效：source ${DEST/#$HOME/~}/tint.sh && tint"
 echo "  看看全部气质：    tint mood"
+echo "  授权：非商用免费，商用请见 COMMERCIAL.md（PolyForm Noncommercial 1.0.0）"
 echo

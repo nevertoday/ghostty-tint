@@ -454,7 +454,7 @@ def sync_skill() -> None:
     sk = ROOT / "skills" / "ghostty-tint"
     (sk / "tools").mkdir(parents=True, exist_ok=True)
     (sk / "moods").mkdir(exist_ok=True)
-    for f in ("tint.sh", "install.sh"):
+    for f in ("tint.sh", "install.sh", "LICENSE", "COMMERCIAL.md"):
         shutil.copy2(ROOT / f, sk / f)
     shutil.copy2(ROOT / "tools" / "tint-gen.py", sk / "tools" / "tint-gen.py")
     for f in (sk / "moods").glob("*.tint"):

@@ -1,6 +1,7 @@
 # shellcheck shell=bash
 # ghostty-tint · 每开一个面板，换一种安静的颜色
-# https://github.com/nevertoday/ghostty-tint · MIT
+# https://github.com/nevertoday/ghostty-tint
+# Copyright (c) 2026 小小东 Xiaoxiaodong · PolyForm Noncommercial 1.0.0（非商用免费，商用见 COMMERCIAL.md）
 #
 # 在 ~/.zshrc 或 ~/.bashrc 里 source 这个文件即可：
 #   source ~/.config/ghostty-tint/tint.sh

@@ -1,41 +1,41 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 420" width="960" height="420" role="img" aria-label="按顺序取色与黄金角取色的对比">
 <rect width="960" height="420" rx="22" fill="#F1EFEA"/>
-<text x="40" y="52" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Noto Sans CJK SC','Microsoft YaHei',sans-serif" font-size="19" font-weight="700" fill="#2B2A27">按顺序取色 1 → 2 → 3</text>
-<text x="40" y="76" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Noto Sans CJK SC','Microsoft YaHei',sans-serif" font-size="14" fill="#8A867D">相邻面板是色轮上的邻居，一眼分不出来</text>
-<rect x="40" y="94" width="98" height="78" rx="8" fill="#EBD6D3" stroke="#000" stroke-opacity=".06"/>
-<text x="52" y="118" font-family="ui-monospace,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="13" fill="#2B2A27" opacity=".5">面板 1</text>
-<text x="52" y="160" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Noto Sans CJK SC','Microsoft YaHei',sans-serif" font-size="14" fill="#2B2A27">珊瑚粉</text>
-<rect x="146" y="94" width="98" height="78" rx="8" fill="#EFDFC9" stroke="#000" stroke-opacity=".06"/>
-<text x="158" y="118" font-family="ui-monospace,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="13" fill="#2B2A27" opacity=".5">面板 2</text>
-<text x="158" y="160" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Noto Sans CJK SC','Microsoft YaHei',sans-serif" font-size="14" fill="#2B2A27">杏桃灰</text>
-<rect x="252" y="94" width="98" height="78" rx="8" fill="#ECE5C6" stroke="#000" stroke-opacity=".06"/>
-<text x="264" y="118" font-family="ui-monospace,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="13" fill="#2B2A27" opacity=".5">面板 3</text>
-<text x="264" y="160" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Noto Sans CJK SC','Microsoft YaHei',sans-serif" font-size="14" fill="#2B2A27">沙金灰</text>
-<rect x="358" y="94" width="98" height="78" rx="8" fill="#DDE7D3" stroke="#000" stroke-opacity=".06"/>
-<text x="370" y="118" font-family="ui-monospace,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="13" fill="#2B2A27" opacity=".5">面板 4</text>
-<text x="370" y="160" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Noto Sans CJK SC','Microsoft YaHei',sans-serif" font-size="14" fill="#2B2A27">鼠尾草</text>
-<rect x="464" y="94" width="98" height="78" rx="8" fill="#D3E5DF" stroke="#000" stroke-opacity=".06"/>
-<text x="476" y="118" font-family="ui-monospace,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="13" fill="#2B2A27" opacity=".5">面板 5</text>
-<text x="476" y="160" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Noto Sans CJK SC','Microsoft YaHei',sans-serif" font-size="14" fill="#2B2A27">青瓷灰</text>
-<text x="574" y="144" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Noto Sans CJK SC','Microsoft YaHei',sans-serif" font-size="30" font-weight="700" fill="#B5584F">✗</text>
-<text x="40" y="240" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Noto Sans CJK SC','Microsoft YaHei',sans-serif" font-size="19" font-weight="700" fill="#2B2A27">黄金角取色 1 → 4 → 7</text>
-<text x="40" y="264" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Noto Sans CJK SC','Microsoft YaHei',sans-serif" font-size="14" fill="#8A867D">每次跳 3 格 ≈ 137.5°，相邻面板永远差得够远（包括转完一圈）</text>
-<rect x="40" y="282" width="98" height="78" rx="8" fill="#EBD6D3" stroke="#000" stroke-opacity=".06"/>
-<text x="52" y="306" font-family="ui-monospace,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="13" fill="#2B2A27" opacity=".5">面板 1</text>
-<text x="52" y="348" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Noto Sans CJK SC','Microsoft YaHei',sans-serif" font-size="14" fill="#2B2A27">珊瑚粉</text>
-<rect x="146" y="282" width="98" height="78" rx="8" fill="#DDE7D3" stroke="#000" stroke-opacity=".06"/>
-<text x="158" y="306" font-family="ui-monospace,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="13" fill="#2B2A27" opacity=".5">面板 2</text>
-<text x="158" y="348" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Noto Sans CJK SC','Microsoft YaHei',sans-serif" font-size="14" fill="#2B2A27">鼠尾草</text>
-<rect x="252" y="282" width="98" height="78" rx="8" fill="#E0DAEA" stroke="#000" stroke-opacity=".06"/>
-<text x="264" y="306" font-family="ui-monospace,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="13" fill="#2B2A27" opacity=".5">面板 3</text>
-<text x="264" y="348" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Noto Sans CJK SC','Microsoft YaHei',sans-serif" font-size="14" fill="#2B2A27">烟紫灰</text>
-<rect x="358" y="282" width="98" height="78" rx="8" fill="#EFDFC9" stroke="#000" stroke-opacity=".06"/>
-<text x="370" y="306" font-family="ui-monospace,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="13" fill="#2B2A27" opacity=".5">面板 4</text>
-<text x="370" y="348" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Noto Sans CJK SC','Microsoft YaHei',sans-serif" font-size="14" fill="#2B2A27">杏桃灰</text>
-<rect x="464" y="282" width="98" height="78" rx="8" fill="#D3E5DF" stroke="#000" stroke-opacity=".06"/>
-<text x="476" y="306" font-family="ui-monospace,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="13" fill="#2B2A27" opacity=".5">面板 5</text>
-<text x="476" y="348" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Noto Sans CJK SC','Microsoft YaHei',sans-serif" font-size="14" fill="#2B2A27">青瓷灰</text>
-<text x="574" y="332" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Noto Sans CJK SC','Microsoft YaHei',sans-serif" font-size="30" font-weight="700" fill="#3E8A5E">✓</text>
+<text x="40.0" y="52.0" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Noto Sans CJK SC','Microsoft YaHei',sans-serif" font-size="19" font-weight="700" fill="#2B2A27">按顺序取色 1 → 2 → 3</text>
+<text x="40.0" y="76.0" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Noto Sans CJK SC','Microsoft YaHei',sans-serif" font-size="14" fill="#8A867D">相邻面板是色轮上的邻居，一眼分不出来</text>
+<rect x="40.0" y="94.0" width="98.0" height="78.0" rx="8" fill="#EBD6D3" stroke="#000" stroke-opacity=".06"/>
+<text x="52.0" y="118.0" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Noto Sans CJK SC','Microsoft YaHei',sans-serif" font-size="13" fill="#2B2A27" opacity=".5">面板 1</text>
+<text x="52.0" y="160.0" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Noto Sans CJK SC','Microsoft YaHei',sans-serif" font-size="14" fill="#2B2A27">珊瑚粉</text>
+<rect x="146.0" y="94.0" width="98.0" height="78.0" rx="8" fill="#EFDFC9" stroke="#000" stroke-opacity=".06"/>
+<text x="158.0" y="118.0" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Noto Sans CJK SC','Microsoft YaHei',sans-serif" font-size="13" fill="#2B2A27" opacity=".5">面板 2</text>
+<text x="158.0" y="160.0" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Noto Sans CJK SC','Microsoft YaHei',sans-serif" font-size="14" fill="#2B2A27">杏桃灰</text>
+<rect x="252.0" y="94.0" width="98.0" height="78.0" rx="8" fill="#ECE5C6" stroke="#000" stroke-opacity=".06"/>
+<text x="264.0" y="118.0" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Noto Sans CJK SC','Microsoft YaHei',sans-serif" font-size="13" fill="#2B2A27" opacity=".5">面板 3</text>
+<text x="264.0" y="160.0" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Noto Sans CJK SC','Microsoft YaHei',sans-serif" font-size="14" fill="#2B2A27">沙金灰</text>
+<rect x="358.0" y="94.0" width="98.0" height="78.0" rx="8" fill="#DDE7D3" stroke="#000" stroke-opacity=".06"/>
+<text x="370.0" y="118.0" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Noto Sans CJK SC','Microsoft YaHei',sans-serif" font-size="13" fill="#2B2A27" opacity=".5">面板 4</text>
+<text x="370.0" y="160.0" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Noto Sans CJK SC','Microsoft YaHei',sans-serif" font-size="14" fill="#2B2A27">鼠尾草</text>
+<rect x="464.0" y="94.0" width="98.0" height="78.0" rx="8" fill="#D3E5DF" stroke="#000" stroke-opacity=".06"/>
+<text x="476.0" y="118.0" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Noto Sans CJK SC','Microsoft YaHei',sans-serif" font-size="13" fill="#2B2A27" opacity=".5">面板 5</text>
+<text x="476.0" y="160.0" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Noto Sans CJK SC','Microsoft YaHei',sans-serif" font-size="14" fill="#2B2A27">青瓷灰</text>
+<text x="574.0" y="144.0" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Noto Sans CJK SC','Microsoft YaHei',sans-serif" font-size="30" font-weight="700" fill="#B5584F">✗</text>
+<text x="40.0" y="240.0" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Noto Sans CJK SC','Microsoft YaHei',sans-serif" font-size="19" font-weight="700" fill="#2B2A27">黄金角取色 1 → 4 → 7</text>
+<text x="40.0" y="264.0" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Noto Sans CJK SC','Microsoft YaHei',sans-serif" font-size="14" fill="#8A867D">每次跳 3 格 ≈ 137.5°，相邻面板永远差得够远（包括转完一圈）</text>
+<rect x="40.0" y="282.0" width="98.0" height="78.0" rx="8" fill="#EBD6D3" stroke="#000" stroke-opacity=".06"/>
+<text x="52.0" y="306.0" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Noto Sans CJK SC','Microsoft YaHei',sans-serif" font-size="13" fill="#2B2A27" opacity=".5">面板 1</text>
+<text x="52.0" y="348.0" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Noto Sans CJK SC','Microsoft YaHei',sans-serif" font-size="14" fill="#2B2A27">珊瑚粉</text>
+<rect x="146.0" y="282.0" width="98.0" height="78.0" rx="8" fill="#DDE7D3" stroke="#000" stroke-opacity=".06"/>
+<text x="158.0" y="306.0" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Noto Sans CJK SC','Microsoft YaHei',sans-serif" font-size="13" fill="#2B2A27" opacity=".5">面板 2</text>
+<text x="158.0" y="348.0" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Noto Sans CJK SC','Microsoft YaHei',sans-serif" font-size="14" fill="#2B2A27">鼠尾草</text>
+<rect x="252.0" y="282.0" width="98.0" height="78.0" rx="8" fill="#E0DAEA" stroke="#000" stroke-opacity=".06"/>
+<text x="264.0" y="306.0" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Noto Sans CJK SC','Microsoft YaHei',sans-serif" font-size="13" fill="#2B2A27" opacity=".5">面板 3</text>
+<text x="264.0" y="348.0" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Noto Sans CJK SC','Microsoft YaHei',sans-serif" font-size="14" fill="#2B2A27">烟紫灰</text>
+<rect x="358.0" y="282.0" width="98.0" height="78.0" rx="8" fill="#EFDFC9" stroke="#000" stroke-opacity=".06"/>
+<text x="370.0" y="306.0" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Noto Sans CJK SC','Microsoft YaHei',sans-serif" font-size="13" fill="#2B2A27" opacity=".5">面板 4</text>
+<text x="370.0" y="348.0" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Noto Sans CJK SC','Microsoft YaHei',sans-serif" font-size="14" fill="#2B2A27">杏桃灰</text>
+<rect x="464.0" y="282.0" width="98.0" height="78.0" rx="8" fill="#D3E5DF" stroke="#000" stroke-opacity=".06"/>
+<text x="476.0" y="306.0" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Noto Sans CJK SC','Microsoft YaHei',sans-serif" font-size="13" fill="#2B2A27" opacity=".5">面板 5</text>
+<text x="476.0" y="348.0" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Noto Sans CJK SC','Microsoft YaHei',sans-serif" font-size="14" fill="#2B2A27">青瓷灰</text>
+<text x="574.0" y="332.0" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Noto Sans CJK SC','Microsoft YaHei',sans-serif" font-size="30" font-weight="700" fill="#3E8A5E">✓</text>
 <path d="M735.5,70.2 A150,150 0 0 1 844.5,70.2 L832.1,101.9 A116,116 0 0 0 747.9,101.9Z" fill="#EBD6D3" stroke="#000" stroke-opacity=".05"/>
 <path d="M850.3,72.7 A150,150 0 0 1 927.3,149.7 L896.2,163.4 A116,116 0 0 0 836.6,103.8Z" fill="#EFDFC9" stroke="#000" stroke-opacity=".05"/>
 <path d="M929.8,155.5 A150,150 0 0 1 929.8,264.5 L898.1,252.1 A116,116 0 0 0 898.1,167.9Z" fill="#ECE5C6" stroke="#000" stroke-opacity=".05"/>
@@ -62,5 +62,5 @@
 <text x="888.0" y="214.5" text-anchor="middle" font-family="ui-monospace,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="12" font-weight="700" fill="#2B2A27">7</text>
 <circle cx="720.7" cy="279.3" r="12" fill="#D7E2EC" stroke="#2B2A27" stroke-width="1.5"/>
 <text x="720.7" y="283.8" text-anchor="middle" font-family="ui-monospace,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="12" font-weight="700" fill="#2B2A27">8</text>
-<text x="790" y="394" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Noto Sans CJK SC','Microsoft YaHei',sans-serif" font-size="14" fill="#8A867D">8 色 · 步长 3 · 圆圈里的数字是打开顺序</text>
+<text x="790.0" y="394.0" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Noto Sans CJK SC','Microsoft YaHei',sans-serif" font-size="14" fill="#8A867D">8 色 · 步长 3 · 圆圈里的数字是打开顺序</text>
 </svg>

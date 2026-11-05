@@ -1,5 +1,7 @@
 # 手动方案：不跑安装脚本也能用
 
+<strong>简体中文</strong> · <a href="manual.en.md">English</a> · <a href="manual.ja.md">日本語</a> · <a href="manual.ko.md">한국어</a> · <a href="manual.ar.md">العربية</a>
+
 从最简单到最完整，挑一个适合你的就行。
 
 ---

@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 270" width="960" height="270" role="img" aria-label="How ghostty-tint works, in five steps">
+<rect width="960" height="270" rx="22" fill="#F1EFEA"/>
+<clipPath id="h0"><rect x="27.0" y="28" width="166" height="176" rx="14"/></clipPath>
+<rect x="27.0" y="28.0" width="166.0" height="176.0" rx="14" fill="#FBFAF8" stroke="#E2DED6"/>
+<g clip-path="url(#h0)">
+<rect x="27.0" y="28.0" width="166.0" height="48.0" fill="#EBD6D3"/>
+</g>
+<text x="43.0" y="60.0" font-family="ui-monospace,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="15" font-weight="700" fill="#2B2A27" opacity=".55">01</text>
+<text x="43.0" y="106.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#2B2A27">New pane</text>
+<text x="43.0" y="138.0" font-family="ui-monospace,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="12" fill="#2B2A27">⌘D split · ⌘T tab</text>
+<text x="43.0" y="176.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="12.5" fill="#8A867D">Ghostty starts a shell</text>
+<path d="M196.0,116.0 L208.0,116.0" fill="none" stroke="#8A867D" stroke-width="1.8" stroke-linecap="round"/>
+<path d="M203.0,111.0 L208.0,116.0 L203.0,121.0" fill="none" stroke="#8A867D" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+<clipPath id="h1"><rect x="213.0" y="28" width="166" height="176" rx="14"/></clipPath>
+<rect x="213.0" y="28.0" width="166.0" height="176.0" rx="14" fill="#FBFAF8" stroke="#E2DED6"/>
+<g clip-path="url(#h1)">
+<rect x="213.0" y="28.0" width="166.0" height="48.0" fill="#DDE7D3"/>
+</g>
+<text x="229.0" y="60.0" font-family="ui-monospace,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="15" font-weight="700" fill="#2B2A27" opacity=".55">02</text>
+<text x="229.0" y="106.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#2B2A27">source tint.sh</text>
+<text x="229.0" y="138.0" font-family="ui-monospace,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="12" fill="#2B2A27">one line in ~/.zshrc</text>
+<text x="229.0" y="176.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="12.5" fill="#8A867D">shell builtins, no fork</text>
+<path d="M382.0,116.0 L394.0,116.0" fill="none" stroke="#8A867D" stroke-width="1.8" stroke-linecap="round"/>
+<path d="M389.0,111.0 L394.0,116.0 L389.0,121.0" fill="none" stroke="#8A867D" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+<clipPath id="h2"><rect x="399.0" y="28" width="166" height="176" rx="14"/></clipPath>
+<rect x="399.0" y="28.0" width="166.0" height="176.0" rx="14" fill="#FBFAF8" stroke="#E2DED6"/>
+<g clip-path="url(#h2)">
+<rect x="399.0" y="28.0" width="166.0" height="48.0" fill="#E0DAEA"/>
+</g>
+<text x="415.0" y="60.0" font-family="ui-monospace,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="15" font-weight="700" fill="#2B2A27" opacity=".55">03</text>
+<text x="415.0" y="106.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#2B2A27">Counter +1</text>
+<text x="415.0" y="138.0" font-family="ui-monospace,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="12" fill="#2B2A27">mkdir as a lock</text>
+<text x="415.0" y="176.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="12.5" fill="#8A867D">4 at once, no clash</text>
+<path d="M568.0,116.0 L580.0,116.0" fill="none" stroke="#8A867D" stroke-width="1.8" stroke-linecap="round"/>
+<path d="M575.0,111.0 L580.0,116.0 L575.0,121.0" fill="none" stroke="#8A867D" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+<clipPath id="h3"><rect x="585.0" y="28" width="166" height="176" rx="14"/></clipPath>
+<rect x="585.0" y="28.0" width="166.0" height="176.0" rx="14" fill="#FBFAF8" stroke="#E2DED6"/>
+<g clip-path="url(#h3)">
+<rect x="585.0" y="28.0" width="166.0" height="48.0" fill="#EFDFC9"/>
+</g>
+<text x="601.0" y="60.0" font-family="ui-monospace,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="15" font-weight="700" fill="#2B2A27" opacity=".55">04</text>
+<text x="601.0" y="106.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#2B2A27">Golden angle</text>
+<text x="601.0" y="138.0" font-family="ui-monospace,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="12" fill="#2B2A27">i · k mod N</text>
+<text x="601.0" y="176.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="12.5" fill="#8A867D">k ≈ 0.382 N, coprime</text>
+<path d="M754.0,116.0 L766.0,116.0" fill="none" stroke="#8A867D" stroke-width="1.8" stroke-linecap="round"/>
+<path d="M761.0,111.0 L766.0,116.0 L761.0,121.0" fill="none" stroke="#8A867D" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+<clipPath id="h4"><rect x="771.0" y="28" width="166" height="176" rx="14"/></clipPath>
+<rect x="771.0" y="28.0" width="166.0" height="176.0" rx="14" fill="#FBFAF8" stroke="#E2DED6"/>
+<g clip-path="url(#h4)">
+<rect x="771.0" y="28.0" width="166.0" height="48.0" fill="#D3E5DF"/>
+</g>
+<text x="787.0" y="60.0" font-family="ui-monospace,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="15" font-weight="700" fill="#2B2A27" opacity=".55">05</text>
+<text x="787.0" y="106.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#2B2A27">OSC 11</text>
+<text x="787.0" y="138.0" font-family="ui-monospace,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="12" fill="#2B2A27">\e]11;#D3E5DF\a</text>
+<text x="787.0" y="176.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="12.5" fill="#8A867D">only this pane</text>
+<text x="480.0" y="240.0" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="14.5" fill="#8A867D">No Ghostty config changes · no daemon · delete one line to undo</text>
+</svg>

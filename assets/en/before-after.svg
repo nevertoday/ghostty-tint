@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 330" width="960" height="330" role="img" aria-label="Before: every pane the same color. After: one color per pane">
+<rect width="960" height="330" rx="22" fill="#F1EFEA"/>
+<clipPath id="ba0"><rect x="32.0" y="30" width="432" height="232" rx="10"/></clipPath>
+<rect x="32.0" y="36.0" width="432.0" height="232.0" rx="10" fill="#3A3326" opacity=".08"/>
+<g clip-path="url(#ba0)">
+<rect x="32.0" y="30.0" width="432.0" height="232.0" fill="#D9D6CE"/>
+<rect x="32.0" y="30.0" width="432.0" height="24.0" fill="#F8F7F4"/>
+<circle cx="46.0" cy="42.0" r="4.5" fill="#FF5F57"/>
+<circle cx="60.0" cy="42.0" r="4.5" fill="#FEBC2E"/>
+<circle cx="74.0" cy="42.0" r="4.5" fill="#28C840"/>
+<rect x="32.0" y="54.0" width="142.7" height="103.0" fill="#FCFBF9"/>
+<text x="44.0" y="78.0" font-family="ui-monospace,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="11.5" fill="#2B2A27" opacity=".45">~ ❯</text>
+<text x="72.0" y="78.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="12" fill="#2B2A27">claude · refactor</text>
+<rect x="44.0" y="92.0" width="84.0" height="5.0" rx="2.5" fill="#2B2A27" opacity=".13"/>
+<rect x="44.0" y="104.0" width="62.0" height="5.0" rx="2.5" fill="#2B2A27" opacity=".13"/>
+<rect x="176.7" y="54.0" width="142.7" height="103.0" fill="#FCFBF9"/>
+<text x="188.7" y="78.0" font-family="ui-monospace,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="11.5" fill="#2B2A27" opacity=".45">~ ❯</text>
+<text x="216.7" y="78.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="12" fill="#2B2A27">claude · docs</text>
+<rect x="188.7" y="92.0" width="84.0" height="5.0" rx="2.5" fill="#2B2A27" opacity=".13"/>
+<rect x="188.7" y="104.0" width="62.0" height="5.0" rx="2.5" fill="#2B2A27" opacity=".13"/>
+<rect x="188.7" y="116.0" width="96.0" height="5.0" rx="2.5" fill="#2B2A27" opacity=".13"/>
+<rect x="321.3" y="54.0" width="142.7" height="103.0" fill="#FCFBF9"/>
+<text x="333.3" y="78.0" font-family="ui-monospace,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="11.5" fill="#2B2A27" opacity=".45">~ ❯</text>
+<text x="361.3" y="78.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="12" fill="#2B2A27">codex · tests</text>
+<rect x="333.3" y="92.0" width="84.0" height="5.0" rx="2.5" fill="#2B2A27" opacity=".13"/>
+<rect x="333.3" y="104.0" width="62.0" height="5.0" rx="2.5" fill="#2B2A27" opacity=".13"/>
+<rect x="32.0" y="159.0" width="142.7" height="103.0" fill="#FCFBF9"/>
+<text x="44.0" y="183.0" font-family="ui-monospace,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="11.5" fill="#2B2A27" opacity=".45">~ ❯</text>
+<text x="72.0" y="183.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="12" fill="#2B2A27">npm run dev</text>
+<rect x="44.0" y="197.0" width="84.0" height="5.0" rx="2.5" fill="#2B2A27" opacity=".13"/>
+<rect x="44.0" y="209.0" width="62.0" height="5.0" rx="2.5" fill="#2B2A27" opacity=".13"/>
+<rect x="44.0" y="221.0" width="96.0" height="5.0" rx="2.5" fill="#2B2A27" opacity=".13"/>
+<rect x="176.7" y="159.0" width="142.7" height="103.0" fill="#FCFBF9"/>
+<text x="188.7" y="183.0" font-family="ui-monospace,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="11.5" fill="#2B2A27" opacity=".45">~ ❯</text>
+<text x="216.7" y="183.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="12" fill="#2B2A27">ssh prod</text>
+<rect x="188.7" y="197.0" width="84.0" height="5.0" rx="2.5" fill="#2B2A27" opacity=".13"/>
+<rect x="188.7" y="209.0" width="62.0" height="5.0" rx="2.5" fill="#2B2A27" opacity=".13"/>
+<rect x="321.3" y="159.0" width="142.7" height="103.0" fill="#FCFBF9"/>
+<text x="333.3" y="183.0" font-family="ui-monospace,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="11.5" fill="#2B2A27" opacity=".45">~ ❯</text>
+<text x="361.3" y="183.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="12" fill="#2B2A27">git rebase</text>
+<rect x="333.3" y="197.0" width="84.0" height="5.0" rx="2.5" fill="#2B2A27" opacity=".13"/>
+<rect x="333.3" y="209.0" width="62.0" height="5.0" rx="2.5" fill="#2B2A27" opacity=".13"/>
+<rect x="333.3" y="221.0" width="96.0" height="5.0" rx="2.5" fill="#2B2A27" opacity=".13"/>
+</g>
+<circle cx="438.0" cy="232.0" r="16" fill="#C25B52"/>
+<text x="438.0" y="239.0" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="20" font-weight="700" fill="#fff">?</text>
+<text x="36.0" y="296.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#2B2A27">Before: six identical panes</text>
+<text x="36.0" y="318.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="13.5" fill="#8A867D">Which one is prod? Where did that message go?</text>
+<clipPath id="ba1"><rect x="496.0" y="30" width="432" height="232" rx="10"/></clipPath>
+<rect x="496.0" y="36.0" width="432.0" height="232.0" rx="10" fill="#3A3326" opacity=".08"/>
+<g clip-path="url(#ba1)">
+<rect x="496.0" y="30.0" width="432.0" height="232.0" fill="#D9D6CE"/>
+<rect x="496.0" y="30.0" width="432.0" height="24.0" fill="#F8F7F4"/>
+<circle cx="510.0" cy="42.0" r="4.5" fill="#FF5F57"/>
+<circle cx="524.0" cy="42.0" r="4.5" fill="#FEBC2E"/>
+<circle cx="538.0" cy="42.0" r="4.5" fill="#28C840"/>
+<rect x="496.0" y="54.0" width="142.7" height="103.0" fill="#EBD6D3"/>
+<text x="508.0" y="78.0" font-family="ui-monospace,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="11.5" fill="#2B2A27" opacity=".45">~ ❯</text>
+<text x="536.0" y="78.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="12" fill="#2B2A27">claude · refactor</text>
+<rect x="508.0" y="92.0" width="84.0" height="5.0" rx="2.5" fill="#2B2A27" opacity=".13"/>
+<rect x="508.0" y="104.0" width="62.0" height="5.0" rx="2.5" fill="#2B2A27" opacity=".13"/>
+<text x="628.7" y="147.0" text-anchor="end" font-family="ui-monospace,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="10.5" fill="#2B2A27" opacity=".5">#EBD6D3</text>
+<rect x="640.7" y="54.0" width="142.7" height="103.0" fill="#DDE7D3"/>
+<text x="652.7" y="78.0" font-family="ui-monospace,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="11.5" fill="#2B2A27" opacity=".45">~ ❯</text>
+<text x="680.7" y="78.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="12" fill="#2B2A27">claude · docs</text>
+<rect x="652.7" y="92.0" width="84.0" height="5.0" rx="2.5" fill="#2B2A27" opacity=".13"/>
+<rect x="652.7" y="104.0" width="62.0" height="5.0" rx="2.5" fill="#2B2A27" opacity=".13"/>
+<rect x="652.7" y="116.0" width="96.0" height="5.0" rx="2.5" fill="#2B2A27" opacity=".13"/>
+<text x="773.3" y="147.0" text-anchor="end" font-family="ui-monospace,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="10.5" fill="#2B2A27" opacity=".5">#DDE7D3</text>
+<rect x="785.3" y="54.0" width="142.7" height="103.0" fill="#E0DAEA"/>
+<text x="797.3" y="78.0" font-family="ui-monospace,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="11.5" fill="#2B2A27" opacity=".45">~ ❯</text>
+<text x="825.3" y="78.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="12" fill="#2B2A27">codex · tests</text>
+<rect x="797.3" y="92.0" width="84.0" height="5.0" rx="2.5" fill="#2B2A27" opacity=".13"/>
+<rect x="797.3" y="104.0" width="62.0" height="5.0" rx="2.5" fill="#2B2A27" opacity=".13"/>
+<text x="918.0" y="147.0" text-anchor="end" font-family="ui-monospace,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="10.5" fill="#2B2A27" opacity=".5">#E0DAEA</text>
+<rect x="496.0" y="159.0" width="142.7" height="103.0" fill="#EFDFC9"/>
+<text x="508.0" y="183.0" font-family="ui-monospace,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="11.5" fill="#2B2A27" opacity=".45">~ ❯</text>
+<text x="536.0" y="183.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="12" fill="#2B2A27">npm run dev</text>
+<rect x="508.0" y="197.0" width="84.0" height="5.0" rx="2.5" fill="#2B2A27" opacity=".13"/>
+<rect x="508.0" y="209.0" width="62.0" height="5.0" rx="2.5" fill="#2B2A27" opacity=".13"/>
+<rect x="508.0" y="221.0" width="96.0" height="5.0" rx="2.5" fill="#2B2A27" opacity=".13"/>
+<text x="628.7" y="252.0" text-anchor="end" font-family="ui-monospace,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="10.5" fill="#2B2A27" opacity=".5">#EFDFC9</text>
+<rect x="640.7" y="159.0" width="142.7" height="103.0" fill="#D3E5DF"/>
+<text x="652.7" y="183.0" font-family="ui-monospace,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="11.5" fill="#2B2A27" opacity=".45">~ ❯</text>
+<text x="680.7" y="183.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="12" fill="#2B2A27">ssh prod</text>
+<rect x="652.7" y="197.0" width="84.0" height="5.0" rx="2.5" fill="#2B2A27" opacity=".13"/>
+<rect x="652.7" y="209.0" width="62.0" height="5.0" rx="2.5" fill="#2B2A27" opacity=".13"/>
+<text x="773.3" y="252.0" text-anchor="end" font-family="ui-monospace,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="10.5" fill="#2B2A27" opacity=".5">#D3E5DF</text>
+<rect x="785.3" y="159.0" width="142.7" height="103.0" fill="#EFDCE6"/>
+<text x="797.3" y="183.0" font-family="ui-monospace,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="11.5" fill="#2B2A27" opacity=".45">~ ❯</text>
+<text x="825.3" y="183.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="12" fill="#2B2A27">git rebase</text>
+<rect x="797.3" y="197.0" width="84.0" height="5.0" rx="2.5" fill="#2B2A27" opacity=".13"/>
+<rect x="797.3" y="209.0" width="62.0" height="5.0" rx="2.5" fill="#2B2A27" opacity=".13"/>
+<rect x="797.3" y="221.0" width="96.0" height="5.0" rx="2.5" fill="#2B2A27" opacity=".13"/>
+<text x="918.0" y="252.0" text-anchor="end" font-family="ui-monospace,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="10.5" fill="#2B2A27" opacity=".5">#EFDCE6</text>
+</g>
+<text x="500.0" y="296.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#2B2A27">After: one color per pane</text>
+<text x="500.0" y="318.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="13.5" fill="#8A867D">Tell them apart at a glance, and it looks good</text>
+</svg>

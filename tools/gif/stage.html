@@ -27,6 +27,8 @@ html,body{width:900px;height:540px;overflow:hidden;background:#F1EFEA}
 .chips{display:flex;gap:6px;margin:4px 0 2px}
 .chips span{display:block;width:50px;text-align:center;font:10.5px/14px var(--sans)}
 .chips span b{display:block;height:24px;border-radius:5px;margin-bottom:3px;border:1px solid rgba(0,0,0,.06)}
+body.rtl #cap,body.rtl #sub{left:auto;right:34px;direction:rtl}
+body.rtl #strip{right:auto;left:34px}
 #fade{position:absolute;inset:0;background:#F1EFEA;pointer-events:none}
 </style>
 </head>
@@ -36,6 +38,9 @@ html,body{width:900px;height:540px;overflow:hidden;background:#F1EFEA}
 <script>
 const DATA = /*@data*/null/*@end*/;
 const M = Object.fromEntries(DATA.moods.map(m => [m.id, m]));
+const T = DATA.str, LANG = DATA.lang, RTL = LANG === "ar";
+const tagOf = (name, hex) => LANG === "zh" ? `${name} · ${hex}` : hex;
+const bidi = s => `<bdi>${esc(s)}</bdi>`;
 const DEFAULT_BG = "#FCFBF9";
 
 /* ---------- 小工具 ---------- */
@@ -73,11 +78,13 @@ function frame({ panes, mood, title, cap, sub, key, t, fadeIn = 0, fadeOut = 99,
     if (w < 1 || h < 1) return "";
     return `<div class="pane" style="left:${x + 1}px;top:${y + 1}px;width:${w - 2}px;height:${h - 2}px;background:${p.bg};color:${p.fg}">${p.html}${p.tag ? `<span class="tag">${p.tag}</span>` : ""}</div>`;
   }).join("");
-  document.getElementById("cap").textContent = cap;
-  document.getElementById("sub").textContent = sub;
+  const capEl = document.getElementById("cap"), subEl = document.getElementById("sub");
+  capEl.textContent = cap; subEl.textContent = sub;
   const k = document.getElementById("key");
   k.style.opacity = key ? 1 : 0; k.style.transform = key > .5 ? "translateY(2px)" : "none";
-  k.style.left = (34 + document.getElementById("cap").getBoundingClientRect().width + 14) + "px";
+  const cw = Math.max(capEl.getBoundingClientRect().width, subEl.getBoundingClientRect().width);
+  if (RTL) { k.style.left = (900 - 34 - cw - 14 - k.getBoundingClientRect().width) + "px"; }
+  else { k.style.left = (34 + cw + 14) + "px"; }
   const sm = stripMood || mood.mood;
   document.getElementById("strip").innerHTML = sm.bg.map(c => `<b style="background:${c};width:${Math.min(26, 230 / sm.bg.length)}px"></b>`).join("");
   document.getElementById("fade").style.opacity = Math.max(1 - clamp(t / fadeIn), clamp((t - fadeOut) / .45));
@@ -97,10 +104,10 @@ const SPLIT = {
   ],
   starts: [null, [1, 0, 0, 1], [.5, 1, .5, 0], [0, 1, .5, 0], [1, 0, 0, .5], [1, .5, 0, .5]],
   lines: [
-    [["~/app ❯ ", "claude"], ["", ""], ["", "✻ 重构 auth 模块"], ["", "  ⎿ 读取 session.ts", 1], ["", "  ⎿ 42 tests passed", 1]],
+    [["~/app ❯ ", "claude"], ["", ""], ["", T.refactor], ["", T.read, 1], ["", "  ⎿ 42 tests passed", 1]],
     [["~/api ❯ ", "npm run dev"], ["", "ready on :3000", 1], ["", "GET /users 200", 1]],
     [["~/web ❯ ", "git log"], ["", "a1f3c feat: tint", 1], ["", "9be20 fix: lock", 1]],
-    [["~ ❯ ", "codex"], ["", "› 写单元测试", 1]],
+    [["~ ❯ ", "codex"], ["", T.tests, 1]],
     [["~ ❯ ", "htop"]],
     [],
   ],
@@ -130,7 +137,7 @@ function sceneSplit(t) {
       const done = ty.length === [...L[0][1]].length;
       html += `<span class="dim">${esc(L[0][0])}</span>${esc(ty)}${!done && t > t0 ? '<span class="cur"></span>' : ""}\n`;
       const tDone = t0 + .2 + [...L[0][1]].length / 14;
-      L.slice(1).forEach(([, s, soft], k) => { if (t > tDone + .25 + k * .22) html += `<span class="${soft ? "soft" : ""}">${esc(s)}</span>\n`; });
+      L.slice(1).forEach(([, s, soft], k) => { if (t > tDone + .25 + k * .22) html += `<span class="${soft ? "soft" : ""}">${bidi(s)}</span>\n`; });
     } else { // 最后一个面板：输入 tint mood 命令
       const rows = [];
       let cur = "";
@@ -139,19 +146,19 @@ function sceneSplit(t) {
         const cmd = `tint mood ${id}`;
         if (t < ts) break;
         if (t < te) { cur = typed(cmd, t, ts, 19); break; }
-        rows.push(`<span class="dim">~ ❯ </span>${cmd}`, `<span class="soft">  已切换到 ${id}</span>`);
+        rows.push(`<span class="dim">~ ❯ </span>${cmd}`, `<span class="soft">${bidi(T.switched.replace("{id}", id))}</span>`);
         cur = "";
       }
       const keep = rows.slice(-4);
       html = keep.join("\n") + (keep.length ? "\n" : "") + `<span class="dim">~ ❯ </span>${esc(cur)}${blink(t) || cur ? '<span class="cur"></span>' : ""}`;
     }
-    const tag = (i === 0 || tint > .6) ? `${mood.name(i)} · ${mood.hexOf(i)}` : "";
+    const tag = (i === 0 || tint > .6) ? tagOf(mood.name(i), mood.hexOf(i)) : "";
     panes.push({ r, bg, fg, html, tag });
   }
-  let cap = "每按一次 ⌘D，新面板自动换一种颜色", sub = "低饱和 · 同亮度 · 黄金角取色，相邻面板永不撞色";
-  if (t >= 5.9) { cap = "tint mood neon"; sub = "一条命令换气质 · 深色也有温度"; }
-  if (t >= 7.85) { cap = "tint mood macaron"; sub = "12 色马卡龙 · 开再多也不撞色"; }
-  if (t >= 9.8) { cap = "tint mood paper"; sub = "回到默认纸感 · 共 7 种气质，颜色数量随你"; }
+  let cap = T.c1, sub = T.s1;
+  if (t >= 5.9) { cap = "tint mood neon"; sub = T.s2; }
+  if (t >= 7.85) { cap = "tint mood macaron"; sub = T.s3; }
+  if (t >= 9.8) { cap = "tint mood paper"; sub = T.s4; }
   let key = 0; for (const s of S.splits) if (t > s - .3 && t < s + .25) key = t > s - .08 && t < s + .12 ? 1 : .4;
   if (t < .5) key = 0;
   frame({ panes, mood, title: `ghostty — ${n} pane${n > 1 ? "s" : ""}`, cap, sub, key, t, fadeIn: .35, fadeOut: S.dur - .45 });
@@ -166,25 +173,26 @@ const SKILL = {
 function sceneSkill(t) {
   const S = SKILL, K = M.kyoto;
   const mood = moodAt(t, [[-1, "paper"], [S.apply, "kyoto"]]);
-  const ask = "我想要京都秋天寺庙的感觉，8 个颜色";
-  const tAsk = .55, tAskEnd = tAsk + [...ask].length / 9;
+  const ask = T.ask;
+  const cps = /[\u3000-\u9fff\uac00-\ud7af]/.test(ask) ? 9 : 20;  // 中日韩每秒 9 字，其他 20 字
+  const tAsk = .55, tAskEnd = tAsk + [...ask].length / cps;
   const ai = [
-    [tAskEnd + .5, "⏺", "读取 ghostty-tint skill"],
-    [tAskEnd + 1.0, "⏺", "气质 → 亮度 0.89 · 彩度 0.045 · 色相 20°→130°"],
-    [tAskEnd + 1.35, " ", "  枫叶的红 → 旧木的金 → 苔庭的绿"],
-    [tAskEnd + 1.9, "⏺", "生成 8 色 · 体检 ✓ 对比度 12.3 · 色差 ΔE 3.5"],
+    [tAskEnd + .5, "⏺", T.ai[0]],
+    [tAskEnd + 1.0, "⏺", T.ai[1]],
+    [tAskEnd + 1.35, " ", T.ai[2]],
+    [tAskEnd + 1.9, "⏺", T.ai[3]],
   ];
   const tChips = tAskEnd + 2.3;
   let h = `<span class="dim">~/ ❯ </span>claude\n\n`;
-  const ty = typed(ask, t, tAsk, 9);
-  h += `<b>&gt; </b>${esc(ty)}${t < tAskEnd + .3 ? '<span class="cur"></span>' : ""}\n`;
-  for (const [t0, b, s] of ai) if (t > t0) h += `\n${b} <span class="${b === " " ? "soft" : ""}">${esc(s)}</span>`;
+  const ty = typed(ask, t, tAsk, cps);
+  h += `<b>&gt; </b>${bidi(ty)}${t < tAskEnd + .3 ? '<span class="cur"></span>' : ""}\n`;
+  for (const [t0, b, s] of ai) if (t > t0) h += `\n${b} <span class="${b === " " ? "soft" : ""}">${bidi(s)}</span>`;
   if (t > tChips) {
     const shown = Math.min(K.bg.length, Math.floor((t - tChips) / .12) + 1);
     h += `\n<div class="chips">` + K.bg.slice(0, shown).map((c, i) => `<span><b style="background:${c}"></b>${K.names[i]}</span>`).join("") + `</div>`;
   }
-  if (t > S.apply - .35) h += `⏺ <span>tint mood kyoto</span>  <span class="soft">✓ 已应用</span>`;
-  if (t > S.apply + .9) h += `\n\n<span class="soft">  还可以试试：晨雾 mist · 夜航 midnight · 茶室 matcha</span>`;
+  if (t > S.apply - .35) h += `⏺ <span>tint mood kyoto</span>  <span class="soft">${bidi(T.applied)}</span>`;
+  if (t > S.apply + .9) h += `\n\n<span class="soft">${bidi(T.alt)}</span>`;
   const right = [
     `<span class="dim">~/api ❯ </span>npm run dev\n<span class="soft">ready on :3000</span>`,
     `<span class="dim">~/web ❯ </span>git log\n<span class="soft">a1f3c feat: tint</span>`,
@@ -192,17 +200,22 @@ function sceneSkill(t) {
   const panes = S.layout.map((r, i) => {
     // 应用时三个面板依次换色
     const local = moodAt(t, [[-1, "paper"], [S.apply + i * .18, "kyoto"]]);
-    return { r, bg: local.pane(i), fg: local.fg, html: i === 0 ? h : right[i - 1], tag: `${local.name(i)} · ${local.hexOf(i)}` };
+    return { r, bg: local.pane(i), fg: local.fg, html: i === 0 ? h : right[i - 1], tag: tagOf(local.name(i), local.hexOf(i)) };
   });
-  const cap = "装上 Skill，一句话要一种气质";
-  const sub = t < S.apply ? "AI 把描述翻译成 OKLCH 参数 · 起名 · 体检" : "京都秋 Kyoto · 8 色 · 枫红 朱鹭 柿色 香木 金阁 稻穗 抹茶 苔庭";
+  const cap = T.cap_skill;
+  const sub = t < S.apply ? T.sub_skill : `${T.kyoto} · ${T.count8} · ${K.names.join(" ")}`;
   frame({ panes, mood, title: "ghostty — claude", cap, sub, key: 0, t, fadeIn: .35, fadeOut: S.dur - .45, stripMood: t < S.apply ? M.paper : K });
 }
 
 /* ---------- 入口 ---------- */
 const q = new URLSearchParams(location.hash.slice(1));
-const scene = q.get("scene") || "split", T = +(q.get("t") || 0);
-(scene === "skill" ? sceneSkill : sceneSplit)(T);
+const scene = q.get("scene") || "split", TIME = +(q.get("t") || 0);
+if (RTL) document.body.classList.add("rtl");
+if (DATA.font) {  // 每种语言用自己的字体，等宽字体缺字时回退到它
+  document.documentElement.style.setProperty("--sans", DATA.font);
+  document.documentElement.style.setProperty("--mono", `Menlo,"SF Mono",ui-monospace,${DATA.font},monospace`);
+}
+(scene === "skill" ? sceneSkill : sceneSplit)(TIME);
 window.SCENES = { split: SPLIT.dur, skill: SKILL.dur };
 </script>
 </body>

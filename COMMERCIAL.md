@@ -1,6 +1,6 @@
 # 商业授权说明 · Commercial Licensing
 
-[中文](#中文) · [English](#english)
+<strong>简体中文</strong> · <a href="#english">English</a> · <a href="COMMERCIAL.ja.md">日本語</a> · <a href="COMMERCIAL.ko.md">한국어</a> · <a href="COMMERCIAL.ar.md">العربية</a>
 
 ## 中文
 

@@ -16,7 +16,7 @@ Ghostty의 분할 패널과 탭마다 은은한 배경색을 자동으로 입혀
 </div>
 
 <p align="center">
-  <img src="assets/split.gif" width="100%" alt="⌘D로 화면을 나누면 새 패널이 자동으로 색을 입고, tint mood로 전체 분위기를 바꾼다">
+  <img src="assets/ko/split.gif" width="100%" alt="⌘D로 화면을 나누면 새 패널이 자동으로 색을 입고, tint mood로 전체 분위기를 바꾼다">
 </p>
 
 <p align="center">
@@ -34,7 +34,7 @@ Ghostty의 분할 패널과 탭마다 은은한 배경색을 자동으로 입혀
 Claude 세 개, Codex 하나, dev 서버, 그리고 운영 환경에 붙은 ssh까지. 전부 똑같은 흰 바탕에 검은 글씨입니다. 그러다 "이 테이블 지워 줘"를 보냈는데…… 잠깐, 이게 어느 패널이었더라?
 
 <p align="center">
-  <img src="assets/before-after.svg" width="100%" alt="이전: 여섯 패널이 모두 같은 색. 이후: 패널마다 한 가지 색">
+  <img src="assets/ko/before-after.svg" width="100%" alt="이전: 여섯 패널이 모두 같은 색. 이후: 패널마다 한 가지 색">
 </p>
 
 - **조화롭습니다.** 모든 색이 OKLCH 기준으로 명도와 채도가 같고 색상만 다릅니다. 어떻게 배치돼도 잘 어울립니다.
@@ -57,7 +57,7 @@ ghostty-tint를 설치해 줘: https://github.com/nevertoday/ghostty-tint
 ~/.zshrc에 이미 배경색을 바꾸는 코드가 있으면 건드리기 전에 먼저 물어봐 줘.
 ```
 
-스크립트 없이 직접 설치하고 싶다면 [docs/manual.md](docs/manual.md)(중국어, 코드는 그대로 사용 가능)를 참고하세요. `printf` 한 줄부터 zshrc 5줄짜리 최소 버전까지 정리해 두었습니다.
+스크립트 없이 직접 설치하고 싶다면 [docs/manual.ko.md](docs/manual.ko.md)를 참고하세요. `printf` 한 줄부터 zshrc 5줄짜리 최소 버전까지 정리해 두었습니다.
 
 ## 🧭 사용법
 
@@ -77,7 +77,7 @@ ghostty-tint를 설치해 줘: https://github.com/nevertoday/ghostty-tint
 ## 🌈 일곱 가지 무드
 
 <p align="center">
-  <img src="assets/moods.svg" width="100%" alt="일곱 가지 내장 무드">
+  <img src="assets/ko/moods.svg" width="100%" alt="일곱 가지 내장 무드">
 </p>
 
 `tint mood <이름>`으로 전환합니다: `paper` 종이(기본) · `mist` 새벽안개 · `matcha` 다실 · `macaron` 마카롱 · `morandi` 모란디 · `midnight` 야간비행 · `neon` 네온. 어두운 무드 두 가지는 더 밝은 ANSI 16색도 함께 적용합니다.
@@ -104,7 +104,7 @@ tint mood kyoto
 ## 🤖 AI Skill
 
 <p align="center">
-  <img src="assets/skill.gif" width="100%" alt="'교토 가을 사찰 같은 느낌'이라고 말하면 AI가 8색 무드를 만들어 모든 패널에 적용한다">
+  <img src="assets/ko/skill.gif" width="100%" alt="'교토 가을 사찰 같은 느낌'이라고 말하면 AI가 8색 무드를 만들어 모든 패널에 적용한다">
 </p>
 
 `bash install.sh --skill`을 실행하면 Skill이 `~/.claude/skills/`에 설치됩니다(Codex가 있으면 `~/.codex/skills/`에도). 그다음 원하는 분위기를 말로 전하면 됩니다:
@@ -118,7 +118,7 @@ AI가 설명을 OKLCH 파라미터로 바꿔 색을 만들고, 같은 세계관�
 ## 🔬 작동 원리
 
 <p align="center">
-  <img src="assets/how.svg" width="100%" alt="작동 원리">
+  <img src="assets/ko/how.svg" width="100%" alt="작동 원리">
 </p>
 
 1. `tint.sh`는 셸이 시작될 때 한 번만 실행됩니다. tty를 기억하므로 같은 패널에서 서브셸을 열어도 색이 바뀌지 않습니다.
@@ -127,13 +127,13 @@ AI가 설명을 OKLCH 파라미터로 바꿔 색을 만들고, 같은 세계관�
 4. `printf '\e]11;#D3E5DF\a'`(OSC 11)로 해당 패널의 배경만 바꿉니다.
 
 <p align="center">
-  <img src="assets/spread.svg" width="100%" alt="순서대로 고를 때와 황금각으로 고를 때의 비교">
+  <img src="assets/ko/spread.svg" width="100%" alt="순서대로 고를 때와 황금각으로 고를 때의 비교">
 </p>
 
 OSC 11을 지원하는 터미널이라면 `TINT_ANY_TERM=1`로 Ghostty 밖에서도 쓸 수 있습니다. tmux 패스스루도 지원합니다(필요하면 `set -g allow-passthrough on`). 그 밖의 옵션: `TINT_ORDER=random|seq|spread`, `TINT_AUTO=0`, `TINT_WASH=1`(패널별 OSC 11을 지원하지 않는 호스트용).
 
 ## 📄 라이선스
 
-**비상업적 사용은 무료이며, 상업적 사용은 별도의 서면 허가가 필요합니다.** ghostty-tint는 [PolyForm Noncommercial License 1.0.0](LICENSE)으로 제공됩니다. 소스는 공개되어 있지만 OSI가 정의하는 오픈소스는 아닙니다. 자신의 컴퓨터에서 개인적으로 또는 취미로 쓰는 것은 무료입니다. 유료 업무, 회사나 팀 내부 사용, 상용 제품에 통합, 유료 강의에서 사용하려면 허가가 필요합니다. 자세한 내용은 [COMMERCIAL.md](COMMERCIAL.md)(중국어·영어)를 참고하세요.
+**비상업적 사용은 무료이며, 상업적 사용은 별도의 서면 허가가 필요합니다.** ghostty-tint는 [PolyForm Noncommercial License 1.0.0](LICENSE)으로 제공됩니다. 소스는 공개되어 있지만 OSI가 정의하는 오픈소스는 아닙니다. 자신의 컴퓨터에서 개인적으로 또는 취미로 쓰는 것은 무료입니다. 유료 업무, 회사나 팀 내부 사용, 상용 제품에 통합, 유료 강의에서 사용하려면 허가가 필요합니다. 자세한 내용은 [COMMERCIAL.ko.md](COMMERCIAL.ko.md)를 참고하세요.
 
 Copyright (c) 2026 [小小东 Xiaoxiaodong](https://x.com/xiaoxiaodong01)

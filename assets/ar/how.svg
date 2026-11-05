@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 270" width="960" height="270" role="img" aria-label="كيف يعمل ghostty-tint في خمس خطوات">
+<rect width="960" height="270" rx="22" fill="#F1EFEA"/>
+<clipPath id="h0"><rect x="767.0" y="28" width="166" height="176" rx="14"/></clipPath>
+<rect x="767.0" y="28.0" width="166.0" height="176.0" rx="14" fill="#FBFAF8" stroke="#E2DED6"/>
+<g clip-path="url(#h0)">
+<rect x="767.0" y="28.0" width="166.0" height="48.0" fill="#EBD6D3"/>
+</g>
+<text x="917.0" y="60.0" text-anchor="end" font-family="ui-monospace,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="15" font-weight="700" fill="#2B2A27" opacity=".55">01</text>
+<text x="917.0" y="106.0" direction="rtl" font-family="'Geeza Pro','Noto Sans Arabic','Segoe UI',Tahoma,-apple-system,sans-serif" font-size="17" font-weight="700" fill="#2B2A27">لوحة جديدة</text>
+<text x="917.0" y="138.0" text-anchor="end" font-family="ui-monospace,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="12" fill="#2B2A27">⌘D split · ⌘T tab</text>
+<text x="917.0" y="176.0" direction="rtl" font-family="'Geeza Pro','Noto Sans Arabic','Segoe UI',Tahoma,-apple-system,sans-serif" font-size="12.5" fill="#8A867D">يبدأ Ghostty الـ shell</text>
+<path d="M764.0,116.0 L752.0,116.0" fill="none" stroke="#8A867D" stroke-width="1.8" stroke-linecap="round"/>
+<path d="M757.0,111.0 L752.0,116.0 L757.0,121.0" fill="none" stroke="#8A867D" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+<clipPath id="h1"><rect x="581.0" y="28" width="166" height="176" rx="14"/></clipPath>
+<rect x="581.0" y="28.0" width="166.0" height="176.0" rx="14" fill="#FBFAF8" stroke="#E2DED6"/>
+<g clip-path="url(#h1)">
+<rect x="581.0" y="28.0" width="166.0" height="48.0" fill="#DDE7D3"/>
+</g>
+<text x="731.0" y="60.0" text-anchor="end" font-family="ui-monospace,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="15" font-weight="700" fill="#2B2A27" opacity=".55">02</text>
+<text x="731.0" y="106.0" text-anchor="end" font-family="'Geeza Pro','Noto Sans Arabic','Segoe UI',Tahoma,-apple-system,sans-serif" font-size="17" font-weight="700" fill="#2B2A27">source tint.sh</text>
+<text x="731.0" y="138.0" text-anchor="end" font-family="ui-monospace,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="12" fill="#2B2A27">~/.zshrc</text>
+<text x="731.0" y="176.0" direction="rtl" font-family="'Geeza Pro','Noto Sans Arabic','Segoe UI',Tahoma,-apple-system,sans-serif" font-size="12.5" fill="#8A867D">أوامر مدمجة بلا fork</text>
+<path d="M578.0,116.0 L566.0,116.0" fill="none" stroke="#8A867D" stroke-width="1.8" stroke-linecap="round"/>
+<path d="M571.0,111.0 L566.0,116.0 L571.0,121.0" fill="none" stroke="#8A867D" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+<clipPath id="h2"><rect x="395.0" y="28" width="166" height="176" rx="14"/></clipPath>
+<rect x="395.0" y="28.0" width="166.0" height="176.0" rx="14" fill="#FBFAF8" stroke="#E2DED6"/>
+<g clip-path="url(#h2)">
+<rect x="395.0" y="28.0" width="166.0" height="48.0" fill="#E0DAEA"/>
+</g>
+<text x="545.0" y="60.0" text-anchor="end" font-family="ui-monospace,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="15" font-weight="700" fill="#2B2A27" opacity=".55">03</text>
+<text x="545.0" y="106.0" direction="rtl" font-family="'Geeza Pro','Noto Sans Arabic','Segoe UI',Tahoma,-apple-system,sans-serif" font-size="17" font-weight="700" fill="#2B2A27">العداد +1</text>
+<text x="545.0" y="138.0" text-anchor="end" font-family="ui-monospace,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="12" fill="#2B2A27">mkdir lock</text>
+<text x="545.0" y="176.0" direction="rtl" font-family="'Geeza Pro','Noto Sans Arabic','Segoe UI',Tahoma,-apple-system,sans-serif" font-size="12.5" fill="#8A867D">لا تكرار مع 4 لوحات</text>
+<path d="M392.0,116.0 L380.0,116.0" fill="none" stroke="#8A867D" stroke-width="1.8" stroke-linecap="round"/>
+<path d="M385.0,111.0 L380.0,116.0 L385.0,121.0" fill="none" stroke="#8A867D" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+<clipPath id="h3"><rect x="209.0" y="28" width="166" height="176" rx="14"/></clipPath>
+<rect x="209.0" y="28.0" width="166.0" height="176.0" rx="14" fill="#FBFAF8" stroke="#E2DED6"/>
+<g clip-path="url(#h3)">
+<rect x="209.0" y="28.0" width="166.0" height="48.0" fill="#EFDFC9"/>
+</g>
+<text x="359.0" y="60.0" text-anchor="end" font-family="ui-monospace,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="15" font-weight="700" fill="#2B2A27" opacity=".55">04</text>
+<text x="359.0" y="106.0" direction="rtl" font-family="'Geeza Pro','Noto Sans Arabic','Segoe UI',Tahoma,-apple-system,sans-serif" font-size="17" font-weight="700" fill="#2B2A27">الزاوية الذهبية</text>
+<text x="359.0" y="138.0" text-anchor="end" font-family="ui-monospace,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="12" fill="#2B2A27">i · k mod N</text>
+<text x="359.0" y="176.0" direction="rtl" font-family="'Geeza Pro','Noto Sans Arabic','Segoe UI',Tahoma,-apple-system,sans-serif" font-size="12.5" fill="#8A867D">k ≈ 0.382 N، أولي نسبياً</text>
+<path d="M206.0,116.0 L194.0,116.0" fill="none" stroke="#8A867D" stroke-width="1.8" stroke-linecap="round"/>
+<path d="M199.0,111.0 L194.0,116.0 L199.0,121.0" fill="none" stroke="#8A867D" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+<clipPath id="h4"><rect x="23.0" y="28" width="166" height="176" rx="14"/></clipPath>
+<rect x="23.0" y="28.0" width="166.0" height="176.0" rx="14" fill="#FBFAF8" stroke="#E2DED6"/>
+<g clip-path="url(#h4)">
+<rect x="23.0" y="28.0" width="166.0" height="48.0" fill="#D3E5DF"/>
+</g>
+<text x="173.0" y="60.0" text-anchor="end" font-family="ui-monospace,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="15" font-weight="700" fill="#2B2A27" opacity=".55">05</text>
+<text x="173.0" y="106.0" direction="rtl" font-family="'Geeza Pro','Noto Sans Arabic','Segoe UI',Tahoma,-apple-system,sans-serif" font-size="17" font-weight="700" fill="#2B2A27">التلوين بـ OSC 11</text>
+<text x="173.0" y="138.0" text-anchor="end" font-family="ui-monospace,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="12" fill="#2B2A27">\e]11;#D3E5DF\a</text>
+<text x="173.0" y="176.0" direction="rtl" font-family="'Geeza Pro','Noto Sans Arabic','Segoe UI',Tahoma,-apple-system,sans-serif" font-size="12.5" fill="#8A867D">هذه اللوحة فقط</text>
+<text x="480.0" y="240.0" text-anchor="middle" direction="rtl" font-family="'Geeza Pro','Noto Sans Arabic','Segoe UI',Tahoma,-apple-system,sans-serif" font-size="14.5" fill="#8A867D">لا تغيير في إعدادات Ghostty · بلا عمليات خلفية · احذف سطراً لتعود كما كنت</text>
+</svg>

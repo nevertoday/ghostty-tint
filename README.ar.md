@@ -16,7 +16,7 @@
 </div>
 
 <p align="center">
-  <img src="assets/split.gif" width="100%" alt="عند الضغط على ⌘D تتلوّن كل لوحة جديدة تلقائياً، ويغيّر الأمر tint mood الطابع كله">
+  <img src="assets/ar/split.gif" width="100%" alt="عند الضغط على ⌘D تتلوّن كل لوحة جديدة تلقائياً، ويغيّر الأمر tint mood الطابع كله">
 </p>
 
 <p align="center" dir="rtl">
@@ -36,7 +36,7 @@
 ثلاث جلسات Claude، وجلسة Codex، وخادم تطوير، واتصال ssh بخادم الإنتاج، وكلها بالأسود على أبيض متطابق تماماً. ثم ترسل «احذف هذا الجدول»… لحظة، أي لوحة كانت هذه؟
 
 <p align="center">
-  <img src="assets/before-after.svg" width="100%" alt="قبل: ست لوحات بلون واحد. بعد: لكل لوحة لونها">
+  <img src="assets/ar/before-after.svg" width="100%" alt="قبل: ست لوحات بلون واحد. بعد: لكل لوحة لونها">
 </p>
 
 - **متناسقة.** كل الألوان لها السطوع والتشبّع نفسيهما في فضاء OKLCH، ولا يختلف إلا تدرّج اللون، فتنسجم أينما وُضعت.
@@ -67,7 +67,7 @@ If my ~/.zshrc already changes the background color, ask me before touching it.
 
 </div>
 
-تفضّل التثبيت يدوياً؟ يشرح [docs/manual.md](docs/manual.md) (بالصينية، والشيفرة تعمل كما هي) كل الطرق، من سطر ⁦`printf`⁩ واحد إلى نسخة مصغّرة من خمسة أسطر في zshrc.
+تفضّل التثبيت يدوياً؟ يشرح [docs/manual.ar.md](docs/manual.ar.md) كل الطرق، من سطر ⁦`printf`⁩ واحد إلى نسخة مصغّرة من خمسة أسطر في zshrc.
 
 ## 🧭 الاستخدام
 
@@ -87,7 +87,7 @@ If my ~/.zshrc already changes the background color, ask me before touching it.
 ## 🌈 سبعة طوابع
 
 <p align="center">
-  <img src="assets/moods.svg" width="100%" alt="الطوابع السبعة المدمجة">
+  <img src="assets/ar/moods.svg" width="100%" alt="الطوابع السبعة المدمجة">
 </p>
 
 بدّل الطابع بالأمر ⁦`tint mood <الاسم>`⁩: ‏⁦`paper`⁩ الورق (الافتراضي) · ⁦`mist`⁩ الضباب · ⁦`matcha`⁩ الماتشا · ⁦`macaron`⁩ الماكرون · ⁦`morandi`⁩ موراندي · ⁦`midnight`⁩ منتصف الليل · ⁦`neon`⁩ النيون. ويضبط الطابعان الداكنان أيضاً ألوان ANSI الستة عشر بدرجات أفتح.
@@ -118,7 +118,7 @@ tint mood kyoto
 ## 🤖 AI Skill
 
 <p align="center">
-  <img src="assets/skill.gif" width="100%" alt="تطلب من الذكاء الاصطناعي «إحساس معبد في خريف كيوتو» فيصنع طابعاً من ثمانية ألوان ويطبّقه على اللوحات">
+  <img src="assets/ar/skill.gif" width="100%" alt="تطلب من الذكاء الاصطناعي «إحساس معبد في خريف كيوتو» فيصنع طابعاً من ثمانية ألوان ويطبّقه على اللوحات">
 </p>
 
 شغّل ⁦`bash install.sh --skill`⁩ فتُثبَّت المهارة في ⁦`~/.claude/skills/`⁩ (وفي ⁦`~/.codex/skills/`⁩ إن كان Codex مثبتاً). بعدها صِف الإحساس الذي تريده بكلماتك:
@@ -132,7 +132,7 @@ tint mood kyoto
 ## 🔬 كيف يعمل
 
 <p align="center">
-  <img src="assets/how.svg" width="100%" alt="كيف يعمل">
+  <img src="assets/ar/how.svg" width="100%" alt="كيف يعمل">
 </p>
 
 1. يعمل ⁦`tint.sh`⁩ مرة واحدة عند بدء shell في كل لوحة. وهو يتذكّر الـ tty، فلا يتغيّر اللون إذا فتحت shell فرعياً في اللوحة نفسها.
@@ -141,14 +141,14 @@ tint mood kyoto
 4. يغيّر ⁦`printf '\e]11;#D3E5DF\a'`⁩ (OSC 11) خلفية تلك اللوحة وحدها.
 
 <p align="center">
-  <img src="assets/spread.svg" width="100%" alt="مقارنة بين اختيار الألوان بالترتيب واختيارها بالزاوية الذهبية">
+  <img src="assets/ar/spread.svg" width="100%" alt="مقارنة بين اختيار الألوان بالترتيب واختيارها بالزاوية الذهبية">
 </p>
 
 يعمل في أي طرفية تدعم OSC 11 بضبط ⁦`TINT_ANY_TERM=1`⁩. وتمرير tmux مدعوم (وقد تحتاج إلى ⁦`set -g allow-passthrough on`⁩). خيارات أخرى: ⁦`TINT_ORDER=random|seq|spread`⁩ و⁦`TINT_AUTO=0`⁩ و⁦`TINT_WASH=1`⁩ للمضيفات التي لا تلوّن اللوحات كلاً على حدة.
 
 ## 📄 الترخيص
 
-**الاستخدام غير التجاري مجاني، والاستخدام التجاري يحتاج إلى إذن كتابي منفصل.** يُتاح ghostty-tint بموجب [PolyForm Noncommercial License 1.0.0](LICENSE). الشيفرة المصدرية متاحة للعموم، لكنه ليس برنامجاً مفتوح المصدر وفق تعريف OSI. الاستخدام الشخصي أو للهواية على جهازك مجاني. أما الاستخدام في عمل مدفوع، أو داخل شركة أو فريق، أو ضمن منتج تجاري، أو في دورات مدفوعة، فيحتاج إلى ترخيص. التفاصيل في [COMMERCIAL.md](COMMERCIAL.md) (بالصينية والإنجليزية).
+**الاستخدام غير التجاري مجاني، والاستخدام التجاري يحتاج إلى إذن كتابي منفصل.** يُتاح ghostty-tint بموجب [PolyForm Noncommercial License 1.0.0](LICENSE). الشيفرة المصدرية متاحة للعموم، لكنه ليس برنامجاً مفتوح المصدر وفق تعريف OSI. الاستخدام الشخصي أو للهواية على جهازك مجاني. أما الاستخدام في عمل مدفوع، أو داخل شركة أو فريق، أو ضمن منتج تجاري، أو في دورات مدفوعة، فيحتاج إلى ترخيص. التفاصيل في [COMMERCIAL.ar.md](COMMERCIAL.ar.md).
 
 Copyright (c) 2026 [小小东 Xiaoxiaodong](https://x.com/xiaoxiaodong01)
 

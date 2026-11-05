@@ -1,38 +1,57 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 270" width="960" height="270" role="img" aria-label="ghostty-tint 工作原理五步">
 <rect width="960" height="270" rx="22" fill="#F1EFEA"/>
-<rect x="27" y="28" width="166" height="176" rx="14" fill="#FBFAF8" stroke="#E2DED6"/>
-<path d="M27,42 a14,14 0 0 1 14,-14 h138 a14,14 0 0 1 14,14 v34 h-166z" fill="#EBD6D3"/>
-<text x="43" y="60" font-family="ui-monospace,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="15" font-weight="700" fill="#2B2A27" opacity=".55">01</text>
-<text x="43" y="106" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Noto Sans CJK SC','Microsoft YaHei',sans-serif" font-size="17" font-weight="700" fill="#2B2A27">新建面板</text>
-<text x="43" y="138" font-family="ui-monospace,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="12" fill="#2B2A27">⌘D 分屏 · ⌘T 标签</text>
-<text x="43" y="176" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Noto Sans CJK SC','Microsoft YaHei',sans-serif" font-size="12.5" fill="#8A867D">Ghostty 启动新 shell</text>
-<path d="M196,116 h12 m-5,-5 l5,5 l-5,5" fill="none" stroke="#8A867D" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-<rect x="213" y="28" width="166" height="176" rx="14" fill="#FBFAF8" stroke="#E2DED6"/>
-<path d="M213,42 a14,14 0 0 1 14,-14 h138 a14,14 0 0 1 14,14 v34 h-166z" fill="#DDE7D3"/>
-<text x="229" y="60" font-family="ui-monospace,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="15" font-weight="700" fill="#2B2A27" opacity=".55">02</text>
-<text x="229" y="106" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Noto Sans CJK SC','Microsoft YaHei',sans-serif" font-size="17" font-weight="700" fill="#2B2A27">source tint.sh</text>
-<text x="229" y="138" font-family="ui-monospace,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="12" fill="#2B2A27">~/.zshrc 里的一行</text>
-<text x="229" y="176" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Noto Sans CJK SC','Microsoft YaHei',sans-serif" font-size="12.5" fill="#8A867D">纯 shell 内建，不 fork</text>
-<path d="M382,116 h12 m-5,-5 l5,5 l-5,5" fill="none" stroke="#8A867D" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-<rect x="399" y="28" width="166" height="176" rx="14" fill="#FBFAF8" stroke="#E2DED6"/>
-<path d="M399,42 a14,14 0 0 1 14,-14 h138 a14,14 0 0 1 14,14 v34 h-166z" fill="#E0DAEA"/>
-<text x="415" y="60" font-family="ui-monospace,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="15" font-weight="700" fill="#2B2A27" opacity=".55">03</text>
-<text x="415" y="106" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Noto Sans CJK SC','Microsoft YaHei',sans-serif" font-size="17" font-weight="700" fill="#2B2A27">计数器 +1</text>
-<text x="415" y="138" font-family="ui-monospace,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="12" fill="#2B2A27">mkdir 原子锁</text>
-<text x="415" y="176" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Noto Sans CJK SC','Microsoft YaHei',sans-serif" font-size="12.5" fill="#8A867D">同时开 4 个也不撞号</text>
-<path d="M568,116 h12 m-5,-5 l5,5 l-5,5" fill="none" stroke="#8A867D" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-<rect x="585" y="28" width="166" height="176" rx="14" fill="#FBFAF8" stroke="#E2DED6"/>
-<path d="M585,42 a14,14 0 0 1 14,-14 h138 a14,14 0 0 1 14,14 v34 h-166z" fill="#EFDFC9"/>
-<text x="601" y="60" font-family="ui-monospace,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="15" font-weight="700" fill="#2B2A27" opacity=".55">04</text>
-<text x="601" y="106" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Noto Sans CJK SC','Microsoft YaHei',sans-serif" font-size="17" font-weight="700" fill="#2B2A27">黄金角取色</text>
-<text x="601" y="138" font-family="ui-monospace,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="12" fill="#2B2A27">i · k mod N</text>
-<text x="601" y="176" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Noto Sans CJK SC','Microsoft YaHei',sans-serif" font-size="12.5" fill="#8A867D">k ≈ 0.382 N，与 N 互质</text>
-<path d="M754,116 h12 m-5,-5 l5,5 l-5,5" fill="none" stroke="#8A867D" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-<rect x="771" y="28" width="166" height="176" rx="14" fill="#FBFAF8" stroke="#E2DED6"/>
-<path d="M771,42 a14,14 0 0 1 14,-14 h138 a14,14 0 0 1 14,14 v34 h-166z" fill="#D3E5DF"/>
-<text x="787" y="60" font-family="ui-monospace,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="15" font-weight="700" fill="#2B2A27" opacity=".55">05</text>
-<text x="787" y="106" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Noto Sans CJK SC','Microsoft YaHei',sans-serif" font-size="17" font-weight="700" fill="#2B2A27">OSC 11 上色</text>
-<text x="787" y="138" font-family="ui-monospace,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="12" fill="#2B2A27">\e]11;#D3E5DF\a</text>
-<text x="787" y="176" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Noto Sans CJK SC','Microsoft YaHei',sans-serif" font-size="12.5" fill="#8A867D">只改这一个面板</text>
-<text x="480.0" y="240" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Noto Sans CJK SC','Microsoft YaHei',sans-serif" font-size="14.5" fill="#8A867D">不改 Ghostty 配置 · 没有常驻进程 · 删掉那一行就完全还原</text>
+<clipPath id="h0"><rect x="27.0" y="28" width="166" height="176" rx="14"/></clipPath>
+<rect x="27.0" y="28.0" width="166.0" height="176.0" rx="14" fill="#FBFAF8" stroke="#E2DED6"/>
+<g clip-path="url(#h0)">
+<rect x="27.0" y="28.0" width="166.0" height="48.0" fill="#EBD6D3"/>
+</g>
+<text x="43.0" y="60.0" font-family="ui-monospace,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="15" font-weight="700" fill="#2B2A27" opacity=".55">01</text>
+<text x="43.0" y="106.0" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Noto Sans CJK SC','Microsoft YaHei',sans-serif" font-size="17" font-weight="700" fill="#2B2A27">新建面板</text>
+<text x="43.0" y="138.0" font-family="ui-monospace,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="12" fill="#2B2A27">⌘D 分屏 · ⌘T 标签</text>
+<text x="43.0" y="176.0" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Noto Sans CJK SC','Microsoft YaHei',sans-serif" font-size="12.5" fill="#8A867D">Ghostty 启动新 shell</text>
+<path d="M196.0,116.0 L208.0,116.0" fill="none" stroke="#8A867D" stroke-width="1.8" stroke-linecap="round"/>
+<path d="M203.0,111.0 L208.0,116.0 L203.0,121.0" fill="none" stroke="#8A867D" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+<clipPath id="h1"><rect x="213.0" y="28" width="166" height="176" rx="14"/></clipPath>
+<rect x="213.0" y="28.0" width="166.0" height="176.0" rx="14" fill="#FBFAF8" stroke="#E2DED6"/>
+<g clip-path="url(#h1)">
+<rect x="213.0" y="28.0" width="166.0" height="48.0" fill="#DDE7D3"/>
+</g>
+<text x="229.0" y="60.0" font-family="ui-monospace,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="15" font-weight="700" fill="#2B2A27" opacity=".55">02</text>
+<text x="229.0" y="106.0" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Noto Sans CJK SC','Microsoft YaHei',sans-serif" font-size="17" font-weight="700" fill="#2B2A27">source tint.sh</text>
+<text x="229.0" y="138.0" font-family="ui-monospace,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="12" fill="#2B2A27">~/.zshrc 里的一行</text>
+<text x="229.0" y="176.0" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Noto Sans CJK SC','Microsoft YaHei',sans-serif" font-size="12.5" fill="#8A867D">纯 shell 内建，不 fork</text>
+<path d="M382.0,116.0 L394.0,116.0" fill="none" stroke="#8A867D" stroke-width="1.8" stroke-linecap="round"/>
+<path d="M389.0,111.0 L394.0,116.0 L389.0,121.0" fill="none" stroke="#8A867D" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+<clipPath id="h2"><rect x="399.0" y="28" width="166" height="176" rx="14"/></clipPath>
+<rect x="399.0" y="28.0" width="166.0" height="176.0" rx="14" fill="#FBFAF8" stroke="#E2DED6"/>
+<g clip-path="url(#h2)">
+<rect x="399.0" y="28.0" width="166.0" height="48.0" fill="#E0DAEA"/>
+</g>
+<text x="415.0" y="60.0" font-family="ui-monospace,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="15" font-weight="700" fill="#2B2A27" opacity=".55">03</text>
+<text x="415.0" y="106.0" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Noto Sans CJK SC','Microsoft YaHei',sans-serif" font-size="17" font-weight="700" fill="#2B2A27">计数器 +1</text>
+<text x="415.0" y="138.0" font-family="ui-monospace,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="12" fill="#2B2A27">mkdir 原子锁</text>
+<text x="415.0" y="176.0" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Noto Sans CJK SC','Microsoft YaHei',sans-serif" font-size="12.5" fill="#8A867D">同时开 4 个也不撞号</text>
+<path d="M568.0,116.0 L580.0,116.0" fill="none" stroke="#8A867D" stroke-width="1.8" stroke-linecap="round"/>
+<path d="M575.0,111.0 L580.0,116.0 L575.0,121.0" fill="none" stroke="#8A867D" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+<clipPath id="h3"><rect x="585.0" y="28" width="166" height="176" rx="14"/></clipPath>
+<rect x="585.0" y="28.0" width="166.0" height="176.0" rx="14" fill="#FBFAF8" stroke="#E2DED6"/>
+<g clip-path="url(#h3)">
+<rect x="585.0" y="28.0" width="166.0" height="48.0" fill="#EFDFC9"/>
+</g>
+<text x="601.0" y="60.0" font-family="ui-monospace,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="15" font-weight="700" fill="#2B2A27" opacity=".55">04</text>
+<text x="601.0" y="106.0" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Noto Sans CJK SC','Microsoft YaHei',sans-serif" font-size="17" font-weight="700" fill="#2B2A27">黄金角取色</text>
+<text x="601.0" y="138.0" font-family="ui-monospace,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="12" fill="#2B2A27">i · k mod N</text>
+<text x="601.0" y="176.0" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Noto Sans CJK SC','Microsoft YaHei',sans-serif" font-size="12.5" fill="#8A867D">k ≈ 0.382 N，与 N 互质</text>
+<path d="M754.0,116.0 L766.0,116.0" fill="none" stroke="#8A867D" stroke-width="1.8" stroke-linecap="round"/>
+<path d="M761.0,111.0 L766.0,116.0 L761.0,121.0" fill="none" stroke="#8A867D" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+<clipPath id="h4"><rect x="771.0" y="28" width="166" height="176" rx="14"/></clipPath>
+<rect x="771.0" y="28.0" width="166.0" height="176.0" rx="14" fill="#FBFAF8" stroke="#E2DED6"/>
+<g clip-path="url(#h4)">
+<rect x="771.0" y="28.0" width="166.0" height="48.0" fill="#D3E5DF"/>
+</g>
+<text x="787.0" y="60.0" font-family="ui-monospace,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="15" font-weight="700" fill="#2B2A27" opacity=".55">05</text>
+<text x="787.0" y="106.0" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Noto Sans CJK SC','Microsoft YaHei',sans-serif" font-size="17" font-weight="700" fill="#2B2A27">OSC 11 上色</text>
+<text x="787.0" y="138.0" font-family="ui-monospace,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="12" fill="#2B2A27">\e]11;#D3E5DF\a</text>
+<text x="787.0" y="176.0" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Noto Sans CJK SC','Microsoft YaHei',sans-serif" font-size="12.5" fill="#8A867D">只改这一个面板</text>
+<text x="480.0" y="240.0" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Noto Sans CJK SC','Microsoft YaHei',sans-serif" font-size="14.5" fill="#8A867D">不改 Ghostty 配置 · 没有常驻进程 · 删掉那一行就完全还原</text>
 </svg>

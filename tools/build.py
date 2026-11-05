@@ -12,6 +12,8 @@ import json
 import math
 import re
 import shutil
+import sys
+from contextlib import contextmanager
 from html import escape
 from pathlib import Path
 
@@ -19,6 +21,8 @@ ROOT = Path(__file__).resolve().parent.parent
 spec = importlib.util.spec_from_file_location("tintgen", ROOT / "tools" / "tint-gen.py")
 tg = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(tg)
+sys.path.insert(0, str(ROOT / "tools"))
+import i18n  # noqa: E402
 
 ORDER = ["paper", "mist", "matcha", "macaron", "morandi", "midnight", "neon"]
 MONO = "ui-monospace,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace"
@@ -181,48 +185,116 @@ def hero(moods: list[dict]) -> str:
     return "\n".join(o)
 
 
+# ---------------------------------------------------------------- 多语言画布
+ARABIC = re.compile(r"[؀-ۿ]")
+
+
+class Canvas:
+    """简单的 SVG 画布。rtl=True 时整个版面左右镜像（阿拉伯语），文字按书写方向对齐。
+    with c.unmirrored(x, w): 里面画的东西保持左到右（比如终端窗口）。"""
+
+    def __init__(self, W, H, lang, aria):
+        self.W, self.H, self.lang, self.rtl = W, H, lang, lang == "ar"
+        self.sans = i18n.FONTS[lang]
+        self.flip = self.rtl
+        self.dx = 0.0
+        self.o = [f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}" '
+                  f'role="img" aria-label="{e(aria)}">', f'<rect width="{W}" height="{H}" rx="22" fill="{PAGE}"/>']
+
+    def X(self, x, w=0.0):
+        return self.W - x - w if self.flip else x + self.dx
+
+    @contextmanager
+    def unmirrored(self, x, w):
+        saved = self.flip, self.dx
+        if self.flip:
+            self.flip, self.dx = False, (self.W - x - w) - x
+        try:
+            yield
+        finally:
+            self.flip, self.dx = saved
+
+    @staticmethod
+    def _a(attrs):
+        return "".join(f' {k.replace("_", "-")}="{v}"' for k, v in attrs.items() if v is not None)
+
+    def raw(self, s):
+        self.o.append(s)
+
+    def rect(self, x, y, w, h, **a):
+        self.o.append(f'<rect x="{self.X(x, w):.1f}" y="{y:.1f}" width="{w:.1f}" height="{h:.1f}"{self._a(a)}/>')
+
+    def circle(self, cx, cy, r, **a):
+        self.o.append(f'<circle cx="{self.X(cx):.1f}" cy="{cy:.1f}" r="{r}"{self._a(a)}/>')
+
+    def path(self, pts, close=False, **a):
+        d = "M" + " L".join(f"{self.X(x):.1f},{y:.1f}" for x, y in pts) + ("Z" if close else "")
+        self.o.append(f'<path d="{d}"{self._a(a)}/>')
+        return d
+
+    def text(self, x, y, s, size, fill=INK, weight=None, mono=False, anchor="start", opacity=None, extra=""):
+        xx = self.X(x)
+        is_rtl_text = bool(ARABIC.search(s)) and not mono
+        direction = None
+        if self.flip and anchor != "middle":
+            # 镜像后：原来的「左对齐」变成「右对齐」
+            if is_rtl_text:
+                direction = "rtl"  # rtl 下 start 就是右端
+            else:
+                anchor = "end" if anchor == "start" else "start"
+        elif is_rtl_text:
+            direction = "rtl"
+            anchor = {"start": "end", "end": "start"}.get(anchor, anchor)
+        self.o.append(f'<text x="{xx:.1f}" y="{y:.1f}"{self._a(dict(text_anchor=None if anchor == "start" else anchor, direction=direction, font_family=MONO if mono else self.sans, font_size=size, font_weight=weight, fill=fill, opacity=opacity))}{extra}>{e(s)}</text>')
+
+    def done(self):
+        return "\n".join(self.o + ["</svg>"])
+
+
+def mood_label(lang, mid):
+    return i18n.MOODS[lang][mid]
+
+
+def lights(c, x, y, r, gap):
+    for i, col in enumerate(["#FF5F57", "#FEBC2E", "#28C840"]):
+        c.circle(x + i * gap, y, r, fill=col)
+
+
 # ---------------------------------------------------------------- spread.svg
-def spread(moods: list[dict]) -> str:
-    m = moods[0]
+def spread(moods: list[dict], lang: str = "zh") -> str:
+    m, S = moods[0], i18n.STR[lang]
     n = len(m["bg"])
     order = tg.spread_order(n)
     k = tg.golden_step(n)
-    W, H = 960, 420
-    o = [f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}" role="img" '
-         f'aria-label="按顺序取色与黄金角取色的对比">',
-         f'<rect width="{W}" height="{H}" rx="22" fill="{PAGE}"/>']
+    c = Canvas(960, 420, lang, S["aria_spread"])
 
     def row(y, title, sub, idxs, good):
-        r = [f'<text x="40" y="{y}" font-family="{SANS}" font-size="19" font-weight="700" fill="{INK}">{e(title)}</text>',
-             f'<text x="40" y="{y + 24}" font-family="{SANS}" font-size="14" fill="{INK2}">{e(sub)}</text>']
+        c.text(40, y, title, 19, weight=700)
+        c.text(40, y + 24, sub, 14, fill=INK2)
         for j, idx in enumerate(idxs):
             x = 40 + j * 106
-            r.append(f'<rect x="{x}" y="{y + 42}" width="98" height="78" rx="8" fill="{m["bg"][idx]}" '
-                     f'stroke="#000" stroke-opacity=".06"/>')
-            r.append(f'<text x="{x + 12}" y="{y + 66}" font-family="{MONO}" font-size="13" fill="{INK}" opacity=".5">'
-                     f'面板 {j + 1}</text>')
-            r.append(f'<text x="{x + 12}" y="{y + 108}" font-family="{SANS}" font-size="14" fill="{INK}">'
-                     f'{e(m["names"][idx])}</text>')
+            c.rect(x, y + 42, 98, 78, rx=8, fill=m["bg"][idx], stroke="#000", stroke_opacity=".06")
+            c.text(x + 12, y + 66, S["pane"].format(j=j + 1), 13, opacity=".5")
+            c.text(x + 12, y + 108, m["names"][idx] if lang == "zh" else m["bg"][idx], 14 if lang == "zh" else 12.5,
+                   mono=lang != "zh")
         mark = ("✓", "#3E8A5E") if good else ("✗", "#B5584F")
-        r.append(f'<text x="{40 + 5 * 106 + 4}" y="{y + 92}" font-family="{SANS}" font-size="30" font-weight="700" '
-                 f'fill="{mark[1]}">{mark[0]}</text>')
-        return r
+        c.text(40 + 5 * 106 + 4, y + 92, mark[0], 30, fill=mark[1], weight=700)
 
-    o += row(52, "按顺序取色 1 → 2 → 3", "相邻面板是色轮上的邻居，一眼分不出来", list(range(5)), False)
-    o += row(240, f"黄金角取色 1 → {order[1] + 1} → {order[2] + 1}",
-             f"每次跳 {k} 格 ≈ 137.5°，相邻面板永远差得够远（包括转完一圈）", order[:5], True)
+    row(52, S["seq_title"], S["seq_sub"], list(range(5)), False)
+    row(240, S["gold_title"].format(a=order[1] + 1, b=order[2] + 1), S["gold_sub"].format(k=k), order[:5], True)
 
-    # 右侧色轮 + 星形路径
     cx, cy, R = 790, 210, 150
-    for i, c in enumerate(m["bg"]):
+    for i, col in enumerate(m["bg"]):
         a0 = math.radians(-90 + (i - .5) * 360 / n + 1.2)
         a1 = math.radians(-90 + (i + .5) * 360 / n - 1.2)
         r0, r1 = R - 34, R
-        p = (f"M{cx + r1 * math.cos(a0):.1f},{cy + r1 * math.sin(a0):.1f} "
-             f"A{r1},{r1} 0 0 1 {cx + r1 * math.cos(a1):.1f},{cy + r1 * math.sin(a1):.1f} "
-             f"L{cx + r0 * math.cos(a1):.1f},{cy + r0 * math.sin(a1):.1f} "
-             f"A{r0},{r0} 0 0 0 {cx + r0 * math.cos(a0):.1f},{cy + r0 * math.sin(a0):.1f}Z")
-        o.append(f'<path d="{p}" fill="{c}" stroke="#000" stroke-opacity=".05"/>')
+        X = c.X
+        sweep_o, sweep_i = (0, 1) if c.flip else (1, 0)
+        p = (f"M{X(cx + r1 * math.cos(a0)):.1f},{cy + r1 * math.sin(a0):.1f} "
+             f"A{r1},{r1} 0 0 {sweep_o} {X(cx + r1 * math.cos(a1)):.1f},{cy + r1 * math.sin(a1):.1f} "
+             f"L{X(cx + r0 * math.cos(a1)):.1f},{cy + r0 * math.sin(a1):.1f} "
+             f"A{r0},{r0} 0 0 {sweep_i} {X(cx + r0 * math.cos(a0)):.1f},{cy + r0 * math.sin(a0):.1f}Z")
+        c.raw(f'<path d="{p}" fill="{col}" stroke="#000" stroke-opacity=".05"/>')
     rp = R - 52
 
     def pt(i):
@@ -230,155 +302,138 @@ def spread(moods: list[dict]) -> str:
         return cx + rp * math.cos(a), cy + rp * math.sin(a)
 
     pts = [pt(i) for i in order] + [pt(order[0])]
-    d = "M" + " L".join(f"{x:.1f},{y:.1f}" for x, y in pts)
-    seglen = 2 * rp * math.sin(math.pi * k / n)
-    total = seglen * n
-    o.append(f'<path d="{d}" fill="none" stroke="{INK}" stroke-opacity=".18" stroke-width="1.5"/>')
-    o.append(f'<path d="{d}" fill="none" stroke="{INK}" stroke-width="2.2" stroke-linejoin="round" '
-             f'stroke-dasharray="{total:.1f}" stroke-dashoffset="{total:.1f}">'
-             f'<animate attributeName="stroke-dashoffset" values="{total:.1f};0;0;{total:.1f}" '
-             f'keyTimes="0;.55;.85;1" dur="7s" repeatCount="indefinite"/></path>')
+    total = 2 * rp * math.sin(math.pi * k / n) * n
+    c.path(pts, fill="none", stroke=INK, stroke_opacity=".18", stroke_width="1.5")
+    d = "M" + " L".join(f"{c.X(x):.1f},{y:.1f}" for x, y in pts)
+    c.raw(f'<path d="{d}" fill="none" stroke="{INK}" stroke-width="2.2" stroke-linejoin="round" '
+          f'stroke-dasharray="{total:.1f}" stroke-dashoffset="{total:.1f}">'
+          f'<animate attributeName="stroke-dashoffset" values="{total:.1f};0;0;{total:.1f}" '
+          f'keyTimes="0;.55;.85;1" dur="7s" repeatCount="indefinite"/></path>')
     for step, i in enumerate(order):
         x, y = pt(i)
-        o.append(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="12" fill="{m["bg"][i]}" stroke="{INK}" stroke-width="1.5"/>')
-        o.append(f'<text x="{x:.1f}" y="{y + 4.5:.1f}" text-anchor="middle" font-family="{MONO}" font-size="12" '
-                 f'font-weight="700" fill="{INK}">{step + 1}</text>')
-    o.append(f'<text x="{cx}" y="{cy + R + 34}" text-anchor="middle" font-family="{SANS}" font-size="14" fill="{INK2}">'
-             f'{n} 色 · 步长 {k} · 圆圈里的数字是打开顺序</text>')
-    o.append('</svg>')
-    return "\n".join(o)
+        c.circle(x, y, 12, fill=m["bg"][i], stroke=INK, stroke_width="1.5")
+        c.text(x, y + 4.5, str(step + 1), 12, weight=700, mono=True, anchor="middle")
+    c.text(cx, cy + R + 34, S["wheel"].format(n=n, k=k), 14, fill=INK2, anchor="middle")
+    return c.done()
 
 
 # ---------------------------------------------------------------- moods.svg
-def gallery(moods: list[dict]) -> str:
+def gallery(moods: list[dict], lang: str = "zh") -> str:
+    S = i18n.STR[lang]
     cw, ch, gap, pad = 444, 178, 24, 24
     cards = moods + [None]
     rows = math.ceil(len(cards) / 2)
-    W, H = 960, pad * 2 + rows * ch + (rows - 1) * 20
-    o = [f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}" role="img" '
-         f'aria-label="ghostty-tint 气质图鉴">', f'<rect width="{W}" height="{H}" rx="22" fill="{PAGE}"/>']
+    c = Canvas(960, pad * 2 + rows * ch + (rows - 1) * 20, lang, S["aria_moods"])
     for idx, m in enumerate(cards):
         x = pad + (idx % 2) * (cw + gap)
         y = pad + (idx // 2) * (ch + 20)
         if m is None:
-            o.append(f'<rect x="{x}" y="{y}" width="{cw}" height="{ch}" rx="14" fill="none" stroke="#BDB8AD" '
-                     f'stroke-width="1.5" stroke-dasharray="6 6"/>')
-            o.append(f'<text x="{x + 24}" y="{y + 42}" font-family="{SANS}" font-size="21" font-weight="700" fill="{INK}">'
-                     f'你的气质<tspan dx="10" font-size="15" font-weight="500" fill="{INK2}">Yours</tspan></text>')
-            o.append(f'<text x="{x + 24}" y="{y + 68}" font-family="{SANS}" font-size="14" fill="{INK2}">'
-                     f'一句话描述感觉，或给一个喜欢的颜色，任意色数</text>')
-            o.append(f'<text x="{x + 24}" y="{y + 98}" font-family="{MONO}" font-size="13" fill="{INK}">'
-                     f'tint gen --like paper --count 24</text>')
+            title, sub, desc = S["yours"]
+            c.rect(x, y, cw, ch, rx=14, fill="none", stroke="#BDB8AD", stroke_width="1.5", stroke_dasharray="6 6")
+            c.text(x + 24, y + 42, title, 21, weight=700)
+            c.text(x + 24, y + 68, desc, 14, fill=INK2)
+            c.text(x + 24, y + 98, "tint gen --like paper --count 24", 13, mono=True)
             cols = [hx for hx, _ in tg.generate(24, .9, .045, 10, 360)]
             sw = (cw - 48) / len(cols)
-            o += [f'<rect x="{x + 24 + i * sw:.1f}" y="{y + 118}" width="{sw - 2:.1f}" height="34" rx="3" fill="{c}"/>'
-                  for i, c in enumerate(cols)]
+            for i, col in enumerate(cols):
+                c.rect(x + 24 + i * sw, y + 118, sw - 2, 34, rx=3, fill=col)
             continue
-        o.append(f'<rect x="{x}" y="{y}" width="{cw}" height="{ch}" rx="14" fill="#FBFAF8" stroke="#E2DED6"/>')
-        # 迷你窗口
+        c.rect(x, y, cw, ch, rx=14, fill="#FBFAF8", stroke="#E2DED6")
         mx, my, mw, mh = x + 16, y + 16, 178, 146
-        o.append(f'<clipPath id="c{idx}"><rect x="{mx}" y="{my}" width="{mw}" height="{mh}" rx="8"/></clipPath>')
-        o.append(f'<g clip-path="url(#c{idx})"><rect x="{mx}" y="{my}" width="{mw}" height="{mh}" fill="{m["divider"]}"/>')
-        o.append(f'<rect x="{mx}" y="{my}" width="{mw}" height="16" fill="{m["chrome"]}"/>')
-        for i, c in enumerate(["#FF5F57", "#FEBC2E", "#28C840"]):
-            o.append(f'<circle cx="{mx + 10 + i * 9}" cy="{my + 8}" r="3" fill="{c}"/>')
-        hw, hh = (mw - 1.5) / 2, (mh - 16 - 1.5) / 2
-        for p in range(4):
-            px = mx + (p % 2) * (hw + 1.5)
-            py = my + 16 + (p // 2) * (hh + 1.5)
-            o.append(f'<rect x="{px:.1f}" y="{py:.1f}" width="{hw:.1f}" height="{hh:.1f}" fill="{m["spread"][p]}"/>')
-            for li, lw in enumerate([46, 64, 38][: 3 - (p % 2)]):
-                o.append(f'<rect x="{px + 8:.1f}" y="{py + 10 + li * 11:.1f}" width="{lw}" height="5" rx="2.5" '
-                         f'fill="{m["fg"]}" opacity="{.7 if li == 0 else .35}"/>')
-        o.append('</g>')
+        cid = f"c{idx}"
+        with c.unmirrored(mx, mw):
+            c.raw(f'<clipPath id="{cid}"><rect x="{c.X(mx):.1f}" y="{my}" width="{mw}" height="{mh}" rx="8"/></clipPath>')
+            c.raw(f'<g clip-path="url(#{cid})">')
+            c.rect(mx, my, mw, mh, fill=m["divider"])
+            c.rect(mx, my, mw, 16, fill=m["chrome"])
+            lights(c, mx + 10, my + 8, 3, 9)
+            hw, hh = (mw - 1.5) / 2, (mh - 16 - 1.5) / 2
+            for p in range(4):
+                px = mx + (p % 2) * (hw + 1.5)
+                py = my + 16 + (p // 2) * (hh + 1.5)
+                c.rect(px, py, hw, hh, fill=m["spread"][p])
+                for li, lw in enumerate([46, 64, 38][: 3 - (p % 2)]):
+                    c.rect(px + 8, py + 10 + li * 11, lw, 5, rx=2.5, fill=m["fg"], opacity=.7 if li == 0 else .35)
+            c.raw('</g>')
+        name, sub, vibe = mood_label(lang, m["id"])
         tx = x + 214
-        o.append(f'<text x="{tx}" y="{y + 44}" font-family="{SANS}" font-size="21" font-weight="700" fill="{INK}">'
-                 f'{e(m["zh"])}<tspan dx="8" font-size="15" font-weight="500" fill="{INK2}">{e(m["en"])}</tspan></text>')
-        o.append(f'<text x="{tx}" y="{y + 70}" font-family="{SANS}" font-size="13.5" fill="{INK2}">{e(m["vibe"])}</text>')
-        o.append(f'<text x="{tx}" y="{y + 100}" font-family="{MONO}" font-size="12.5" fill="{INK}">'
-                 f'tint mood {e(m["id"])}</text>')
+        c.text(tx, y + 44, name, 21, weight=700)
+        if sub and lang != "ar":
+            # 副名跟在主名后面（镜像时在左边）
+            off = tw(name, 21) * (0.62 if lang == "ar" else 1) + 10 if lang != "en" else 0
+            c.text(tx + off, y + 44, sub, 15, fill=INK2, weight=500)
+        c.text(tx, y + 70, vibe, 13.5, fill=INK2)
+        c.text(tx, y + 100, f"tint mood {m['id']}", 12.5, mono=True)
         n = len(m["bg"])
         sw = 212 / n
-        o += [f'<rect x="{tx + i * sw:.1f}" y="{y + 116}" width="{sw - 2:.1f}" height="26" rx="3" fill="{c}" '
-              f'stroke="#000" stroke-opacity=".05"/>' for i, c in enumerate(m["bg"])]
-        o.append(f'<text x="{tx}" y="{y + 160}" font-family="{SANS}" font-size="12.5" fill="{INK2}">'
-                 f'{n} 色{" · 深色" if m["dark"] else ""}{" · 默认" if m["id"] == "paper" else ""}</text>')
-    o.append('</svg>')
-    return "\n".join(o)
+        for i, col in enumerate(m["bg"]):
+            c.rect(tx + i * sw, y + 116, sw - 2, 26, rx=3, fill=col, stroke="#000", stroke_opacity=".05")
+        tags = [S["count"].format(n=n)] + ([S["dark"]] if m["dark"] else []) + ([S["default"]] if m["id"] == "paper" else [])
+        c.text(tx, y + 160, " · ".join(tags), 12.5, fill=INK2)
+    return c.done()
 
 
 # ---------------------------------------------------------------- how.svg
-def how(moods: list[dict]) -> str:
-    m = moods[0]
-    steps = [
-        ("新建面板", "⌘D 分屏 · ⌘T 标签", "Ghostty 启动新 shell"),
-        ("source tint.sh", "~/.zshrc 里的一行", "纯 shell 内建，不 fork"),
-        ("计数器 +1", "mkdir 原子锁", "同时开 4 个也不撞号"),
-        ("黄金角取色", "i · k mod N", "k ≈ 0.382 N，与 N 互质"),
-        ("OSC 11 上色", "\\e]11;#D3E5DF\\a", "只改这一个面板"),
-    ]
-    W, H = 960, 270
+def how(moods: list[dict], lang: str = "zh") -> str:
+    m, S = moods[0], i18n.STR[lang]
+    c = Canvas(960, 270, lang, S["aria_how"])
     cw, gap, x0 = 166, 20, 27
-    o = [f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}" role="img" '
-         f'aria-label="ghostty-tint 工作原理五步">', f'<rect width="{W}" height="{H}" rx="22" fill="{PAGE}"/>']
+    steps = S["steps"]
     for i, (t, code, sub) in enumerate(steps):
         x = x0 + i * (cw + gap)
-        c = m["spread"][i]
-        o.append(f'<rect x="{x}" y="28" width="{cw}" height="176" rx="14" fill="#FBFAF8" stroke="#E2DED6"/>')
-        o.append(f'<path d="M{x},{42} a14,14 0 0 1 14,-14 h{cw - 28} a14,14 0 0 1 14,14 v34 h-{cw}z" fill="{c}"/>')
-        o.append(f'<text x="{x + 16}" y="{60}" font-family="{MONO}" font-size="15" font-weight="700" fill="{INK}" '
-                 f'opacity=".55">0{i + 1}</text>')
-        o.append(f'<text x="{x + 16}" y="{106}" font-family="{SANS}" font-size="17" font-weight="700" fill="{INK}">{e(t)}</text>')
-        o.append(f'<text x="{x + 16}" y="{138}" font-family="{MONO}" font-size="12" fill="{INK}">{e(code)}</text>')
-        o.append(f'<text x="{x + 16}" y="{176}" font-family="{SANS}" font-size="12.5" fill="{INK2}">{e(sub)}</text>')
+        cid = f"h{i}"
+        c.raw(f'<clipPath id="{cid}"><rect x="{c.X(x, cw):.1f}" y="28" width="{cw}" height="176" rx="14"/></clipPath>')
+        c.rect(x, 28, cw, 176, rx=14, fill="#FBFAF8", stroke="#E2DED6")
+        c.raw(f'<g clip-path="url(#{cid})">')
+        c.rect(x, 28, cw, 48, fill=m["spread"][i])
+        c.raw('</g>')
+        c.text(x + 16, 60, f"0{i + 1}", 15, weight=700, mono=True, opacity=".55")
+        c.text(x + 16, 106, t, 17, weight=700)
+        c.text(x + 16, 138, code, 12, mono=True)
+        c.text(x + 16, 176, sub, 12.5, fill=INK2)
         if i < len(steps) - 1:
             ax = x + cw + 3
-            o.append(f'<path d="M{ax},{116} h12 m-5,-5 l5,5 l-5,5" fill="none" stroke="{INK2}" stroke-width="1.8" '
-                     f'stroke-linecap="round" stroke-linejoin="round"/>')
-    o.append(f'<text x="{W / 2}" y="{240}" text-anchor="middle" font-family="{SANS}" font-size="14.5" fill="{INK2}">'
-             f'不改 Ghostty 配置 · 没有常驻进程 · 删掉那一行就完全还原</text>')
-    o.append('</svg>')
-    return "\n".join(o)
+            c.path([(ax, 116), (ax + 12, 116)], fill="none", stroke=INK2, stroke_width="1.8", stroke_linecap="round")
+            c.path([(ax + 7, 111), (ax + 12, 116), (ax + 7, 121)], fill="none", stroke=INK2, stroke_width="1.8",
+                   stroke_linecap="round", stroke_linejoin="round")
+    c.text(480, 240, S["how_foot"], 14.5, fill=INK2, anchor="middle")
+    return c.done()
 
 
 # ---------------------------------------------------------------- before-after.svg
-def before_after(moods: list[dict]) -> str:
-    m = moods[0]
-    W, H = 960, 330
-    tasks = ["claude · 重构", "claude · 写文档", "codex · 测试", "npm run dev", "ssh prod", "git rebase"]
-    o = [f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}" role="img" '
-         f'aria-label="之前：所有面板同一种颜色；之后：每个面板一种颜色">', f'<rect width="{W}" height="{H}" rx="22" fill="{PAGE}"/>']
+def before_after(moods: list[dict], lang: str = "zh") -> str:
+    m, S = moods[0], i18n.STR[lang]
+    c = Canvas(960, 330, lang, S["aria_ba"])
+    tasks = S["tasks"]
     for side in (0, 1):
         x0, y0, ww, wh = 32 + side * 464, 30, 432, 232
-        o.append(f'<clipPath id="ba{side}"><rect x="{x0}" y="{y0}" width="{ww}" height="{wh}" rx="10"/></clipPath>')
-        o.append(f'<rect x="{x0}" y="{y0 + 6}" width="{ww}" height="{wh}" rx="10" fill="#3A3326" opacity=".08"/>')
-        o.append(f'<g clip-path="url(#ba{side})"><rect x="{x0}" y="{y0}" width="{ww}" height="{wh}" fill="{m["divider"]}"/>')
-        o.append(f'<rect x="{x0}" y="{y0}" width="{ww}" height="24" fill="{m["chrome"]}"/>')
-        for i, c in enumerate(["#FF5F57", "#FEBC2E", "#28C840"]):
-            o.append(f'<circle cx="{x0 + 14 + i * 14}" cy="{y0 + 12}" r="4.5" fill="{c}"/>')
-        pw, ph = (ww - 4) / 3, (wh - 24 - 2) / 2
-        for k in range(6):
-            px, py = x0 + (k % 3) * (pw + 2), y0 + 24 + (k // 3) * (ph + 2)
-            col = "#FCFBF9" if side == 0 else m["spread"][k]
-            o.append(f'<rect x="{px:.1f}" y="{py:.1f}" width="{pw:.1f}" height="{ph:.1f}" fill="{col}"/>')
-            o.append(f'<text x="{px + 12:.1f}" y="{py + 24:.1f}" font-family="{MONO}" font-size="11.5" fill="{INK}" opacity=".45">~ ❯</text>')
-            o.append(f'<text x="{px + 40:.1f}" y="{py + 24:.1f}" font-family="{SANS}" font-size="12" fill="{INK}">{e(tasks[k])}</text>')
-            for li, lw in enumerate([84, 62, 96][: 2 + k % 2]):
-                o.append(f'<rect x="{px + 12:.1f}" y="{py + 38 + li * 12:.1f}" width="{lw}" height="5" rx="2.5" fill="{INK}" opacity=".13"/>')
-            if side == 1:
-                o.append(f'<text x="{px + pw - 10:.1f}" y="{py + ph - 10:.1f}" text-anchor="end" font-family="{SANS}" '
-                         f'font-size="10.5" fill="{INK}" opacity=".5">{e(m["spread_names"][k])}</text>')
-        o.append('</g>')
-        if side == 0:  # 一个在找 prod 的问号
-            o.append(f'<circle cx="{x0 + ww - 26}" cy="{y0 + wh - 30}" r="16" fill="#C25B52"/>'
-                     f'<text x="{x0 + ww - 26}" y="{y0 + wh - 23}" text-anchor="middle" font-family="{SANS}" font-size="20" '
-                     f'font-weight="700" fill="#fff">?</text>')
-        title = ("之前：六个面板长得一模一样", "之后：每个面板一种颜色")[side]
-        sub = ("哪个是 prod？刚才那句话发给了谁？", "扫一眼就知道，而且怎么看都顺眼")[side]
-        o.append(f'<text x="{x0 + 4}" y="{y0 + wh + 34}" font-family="{SANS}" font-size="17" font-weight="700" fill="{INK}">{e(title)}</text>')
-        o.append(f'<text x="{x0 + 4}" y="{y0 + wh + 56}" font-family="{SANS}" font-size="13.5" fill="{INK2}">{e(sub)}</text>')
-    o.append('</svg>')
-    return "\n".join(o)
+        with c.unmirrored(x0, ww):  # 终端窗口本身不镜像
+            cid = f"ba{side}"
+            c.raw(f'<clipPath id="{cid}"><rect x="{c.X(x0):.1f}" y="{y0}" width="{ww}" height="{wh}" rx="10"/></clipPath>')
+            c.rect(x0, y0 + 6, ww, wh, rx=10, fill="#3A3326", opacity=".08")
+            c.raw(f'<g clip-path="url(#{cid})">')
+            c.rect(x0, y0, ww, wh, fill=m["divider"])
+            c.rect(x0, y0, ww, 24, fill=m["chrome"])
+            lights(c, x0 + 14, y0 + 12, 4.5, 14)
+            pw, ph = (ww - 4) / 3, (wh - 24 - 2) / 2
+            for k in range(6):
+                px, py = x0 + (k % 3) * (pw + 2), y0 + 24 + (k // 3) * (ph + 2)
+                c.rect(px, py, pw, ph, fill="#FCFBF9" if side == 0 else m["spread"][k])
+                c.text(px + 12, py + 24, "~ ❯", 11.5, mono=True, opacity=".45")
+                c.text(px + 40, py + 24, tasks[k], 12)
+                for li, lw in enumerate([84, 62, 96][: 2 + k % 2]):
+                    c.rect(px + 12, py + 38 + li * 12, lw, 5, rx=2.5, fill=INK, opacity=".13")
+                if side == 1:
+                    tag = m["spread_names"][k] if lang == "zh" else m["spread"][k]
+                    c.text(px + pw - 10, py + ph - 10, tag, 10.5, anchor="end", opacity=".5", mono=lang != "zh")
+            c.raw('</g>')
+            if side == 0:
+                c.circle(x0 + ww - 26, y0 + wh - 30, 16, fill="#C25B52")
+                c.text(x0 + ww - 26, y0 + wh - 23, "?", 20, fill="#fff", weight=700, anchor="middle")
+        title, sub = S["before"] if side == 0 else S["after"]
+        c.text(x0 + 4, y0 + wh + 34, title, 17, weight=700)
+        c.text(x0 + 4, y0 + wh + 56, sub, 13.5, fill=INK2)
+    return c.done()
 
 
 # ---------------------------------------------------------------- social.svg（GitHub 分享封面 1280×640）
@@ -467,9 +522,15 @@ def main() -> None:
     moods = load_moods()
     out = ROOT / "assets"
     out.mkdir(exist_ok=True)
-    for name, fn in (("hero", hero), ("spread", spread), ("moods", gallery), ("how", how), ("before-after", before_after), ("social", social)):
+    for name, fn in (("hero", hero), ("social", social)):  # 只有中文版
         (out / f"{name}.svg").write_text(fn(moods), encoding="utf-8")
         print(f"✓ assets/{name}.svg")
+    for lang in i18n.LANGS:
+        d = out if lang == "zh" else out / lang
+        d.mkdir(exist_ok=True)
+        for name, fn in (("spread", spread), ("moods", gallery), ("how", how), ("before-after", before_after)):
+            (d / f"{name}.svg").write_text(fn(moods, lang), encoding="utf-8")
+        print(f"✓ {d.relative_to(ROOT)}/ spread · moods · how · before-after")
     sync_playground(moods)
     print("✓ docs/index.html 数据")
     sync_skill()

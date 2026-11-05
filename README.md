@@ -247,13 +247,14 @@ moods/*.tint           7 种内置气质
 tools/tint-gen.py      气质生成、体检、预览，只用 Python 标准库
 tools/build.py         从 moods/ 生成 SVG，同步调色台和 Skill
 tools/make_gifs.py     逐帧渲染 tools/gif/stage.html，合成 GIF
+tools/i18n.py          演示图和 GIF 的五种语言文字
 install.sh             安装与卸载
 skills/ghostty-tint/   AI Skill，自带完整文件，可单独拷走
 docs/                  在线调色台与手动方案
 PROMPT.md              AI 话术
 ```
 
-所有图片都从 `moods/` 生成。改了气质后运行 `python3 tools/build.py` 和 `python3 tools/make_gifs.py`，文档就会同步更新。
+所有图片都从 `moods/` 和 `tools/i18n.py` 生成，中文版在 `assets/`，其他语言在 `assets/<语言>/`。改了气质后运行 `python3 tools/build.py` 和 `python3 tools/make_gifs.py`，文档就会同步更新。
 
 ## 🙌 致谢
 

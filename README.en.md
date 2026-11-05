@@ -16,7 +16,7 @@ Each Ghostty split and tab gets a soft background of its own, so you can tell yo
 </div>
 
 <p align="center">
-  <img src="assets/split.gif" width="100%" alt="Press ⌘D: each new pane picks up its own soft color; tint mood switches the whole mood">
+  <img src="assets/en/split.gif" width="100%" alt="Press ⌘D: each new pane picks up its own soft color; tint mood switches the whole mood">
 </p>
 
 <p align="center">
@@ -34,7 +34,7 @@ Each Ghostty split and tab gets a soft background of its own, so you can tell yo
 Three Claude sessions, a Codex, a dev server and an ssh into production, all in identical white-on-black panes. Then you send "drop this table"… wait, which pane was that?
 
 <p align="center">
-  <img src="assets/before-after.svg" width="100%" alt="Before: six identical panes. After: one color per pane.">
+  <img src="assets/en/before-after.svg" width="100%" alt="Before: six identical panes. After: one color per pane.">
 </p>
 
 - **Harmonious.** Every color shares the same OKLCH lightness and chroma; only the hue changes.
@@ -57,7 +57,7 @@ Clone it, run `bash install.sh --skill`, then list the built-in moods.
 If my ~/.zshrc already changes the background color, ask me before touching it.
 ```
 
-Prefer doing it by hand? [docs/manual.md](docs/manual.md) (Chinese, the code is universal) goes from a one-line `printf` to a 5-line zshrc version.
+Prefer doing it by hand? [docs/manual.en.md](docs/manual.en.md) goes from a one-line `printf` to a 5-line zshrc version.
 
 ## 🧭 Usage
 
@@ -75,7 +75,7 @@ Prefer doing it by hand? [docs/manual.md](docs/manual.md) (Chinese, the code is 
 ## 🌈 Moods
 
 <p align="center">
-  <img src="assets/moods.svg" width="100%" alt="Seven built-in moods">
+  <img src="assets/en/moods.svg" width="100%" alt="Seven built-in moods">
 </p>
 
 `paper` (default) · `mist` · `matcha` · `macaron` · `morandi` · `midnight` · `neon`. The two dark moods also bring a brighter ANSI palette.
@@ -97,7 +97,7 @@ Or use the [playground](https://nevertoday.github.io/ghostty-tint/): drag the sl
 ## 🤖 AI Skill
 
 <p align="center">
-  <img src="assets/skill.gif" width="100%" alt="Asking the AI for a Kyoto-autumn mood">
+  <img src="assets/en/skill.gif" width="100%" alt="Asking the AI for a Kyoto-autumn mood">
 </p>
 
 Run `bash install.sh --skill`, then just say *"I want the feeling of an autumn temple in Kyoto, 12 colors"*. The agent turns that into OKLCH parameters, names each color, checks contrast and ΔE, and hands you a `tint mood` line plus three alternative moods.
@@ -105,7 +105,7 @@ Run `bash install.sh --skill`, then just say *"I want the feeling of an autumn t
 ## 🔬 How it works
 
 <p align="center">
-  <img src="assets/how.svg" width="100%" alt="How it works">
+  <img src="assets/en/how.svg" width="100%" alt="How it works">
 </p>
 
 1. `tint.sh` is sourced by your shell and runs once per pane. It tracks the tty, so subshells don't recolor.
@@ -114,7 +114,7 @@ Run `bash install.sh --skill`, then just say *"I want the feeling of an autumn t
 4. `printf '\e]11;#D3E5DF\a'` (OSC 11) recolors just that pane.
 
 <p align="center">
-  <img src="assets/spread.svg" width="100%" alt="Sequential vs golden-angle order">
+  <img src="assets/en/spread.svg" width="100%" alt="Sequential vs golden-angle order">
 </p>
 
 Works in any terminal with OSC 11 support via `TINT_ANY_TERM=1`. tmux passthrough is handled for you (you may need `set -g allow-passthrough on`). Other options: `TINT_ORDER=random|seq|spread`, `TINT_AUTO=0`, and `TINT_WASH=1` for hosts that can't color splits separately.

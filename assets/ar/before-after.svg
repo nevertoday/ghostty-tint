@@ -4,7 +4,7 @@
 <rect x="496.0" y="36.0" width="432.0" height="232.0" rx="10" fill="#3A3326" opacity=".08"/>
 <g clip-path="url(#ba0)">
 <rect x="496.0" y="30.0" width="432.0" height="232.0" fill="#D9D6CE"/>
-<rect x="496.0" y="30.0" width="432.0" height="24.0" fill="#F8F7F4"/>
+<rect x="496.0" y="30.0" width="432.0" height="24.0" fill="#FCFBF9"/>
 <circle cx="510.0" cy="42.0" r="4.5" fill="#FF5F57"/>
 <circle cx="524.0" cy="42.0" r="4.5" fill="#FEBC2E"/>
 <circle cx="538.0" cy="42.0" r="4.5" fill="#28C840"/>
@@ -50,7 +50,7 @@
 <rect x="32.0" y="36.0" width="432.0" height="232.0" rx="10" fill="#3A3326" opacity=".08"/>
 <g clip-path="url(#ba1)">
 <rect x="32.0" y="30.0" width="432.0" height="232.0" fill="#D9D6CE"/>
-<rect x="32.0" y="30.0" width="432.0" height="24.0" fill="#F8F7F4"/>
+<rect x="32.0" y="30.0" width="432.0" height="24.0" fill="#EBD6D3"/>
 <circle cx="46.0" cy="42.0" r="4.5" fill="#FF5F57"/>
 <circle cx="60.0" cy="42.0" r="4.5" fill="#FEBC2E"/>
 <circle cx="74.0" cy="42.0" r="4.5" fill="#28C840"/>

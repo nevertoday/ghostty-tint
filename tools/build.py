@@ -48,6 +48,15 @@ def load_moods() -> list[dict]:
     return out
 
 
+def mixhex(a: str, b: str, p: float) -> str:
+    return "#" + "".join(f"{round(int(a[i:i + 2], 16) * (1 - p) + int(b[i:i + 2], 16) * p):02X}" for i in (1, 3, 5))
+
+
+def bar_ink(m: dict, bg: str) -> str:
+    """标题栏文字：前景色和标题栏底色各一半"""
+    return mixhex(bg, m["fg"], .5)
+
+
 def tw(s: str, size: float = 13.5) -> float:
     """等宽字体下的大致文字宽度：ASCII 0.6em，中日韩 1em"""
     return sum(size if ord(ch) > 0x2E80 else size * 0.602 for ch in s)
@@ -122,13 +131,13 @@ def hero(moods: list[dict]) -> str:
          f'<g clip-path="url(#win)">',
          f'<rect x="{wx}" y="{wy}" width="{ww}" height="{wh}" fill="{moods[0]["divider"]}">'
          + anim("fill", track(lambda m: m["divider"]), dur, kt) + '</rect>',
-         f'<rect x="{wx}" y="{wy}" width="{ww}" height="{tb}" fill="{moods[0]["chrome"]}">'
-         + anim("fill", track(lambda m: m["chrome"]), dur, kt) + '</rect>']
+         f'<rect x="{wx}" y="{wy}" width="{ww}" height="{tb}" fill="{moods[0]["spread"][0]}">'
+         + anim("fill", track(lambda m: m["spread"][0]), dur, kt) + '</rect>']  # 标题栏跟随聚焦面板（左侧大面板）
     for i, c in enumerate(["#FF5F57", "#FEBC2E", "#28C840"]):
         o.append(f'<circle cx="{wx + 20 + i * 20}" cy="{wy + tb / 2}" r="6" fill="{c}"/>')
     o.append(f'<text x="{wx + ww / 2}" y="{wy + tb / 2 + 4.5}" text-anchor="middle" font-family="{SANS}" '
-             f'font-size="12.5" fill="{moods[0]["chrome_ink"]}">ghostty — 4 panes'
-             + anim("fill", track(lambda m: m["chrome_ink"]), dur, kt) + '</text>')
+             f'font-size="12.5" fill="{bar_ink(moods[0], moods[0]["spread"][0])}">ghostty — 4 panes'
+             + anim("fill", track(lambda m: bar_ink(m, m["spread"][0])), dur, kt) + '</text>')
 
     for pi, (x, y, w, h) in enumerate(panes):
         o.append(f'<rect x="{x}" y="{y}" width="{w}" height="{h}" fill="{moods[0]["spread"][pi]}">'
@@ -345,7 +354,7 @@ def gallery(moods: list[dict], lang: str = "zh") -> str:
             c.raw(f'<clipPath id="{cid}"><rect x="{c.X(mx):.1f}" y="{my}" width="{mw}" height="{mh}" rx="8"/></clipPath>')
             c.raw(f'<g clip-path="url(#{cid})">')
             c.rect(mx, my, mw, mh, fill=m["divider"])
-            c.rect(mx, my, mw, 16, fill=m["chrome"])
+            c.rect(mx, my, mw, 16, fill=m["spread"][0])  # 标题栏跟随聚焦面板
             lights(c, mx + 10, my + 8, 3, 9)
             hw, hh = (mw - 1.5) / 2, (mh - 16 - 1.5) / 2
             for p in range(4):
@@ -413,7 +422,7 @@ def before_after(moods: list[dict], lang: str = "zh") -> str:
             c.rect(x0, y0 + 6, ww, wh, rx=10, fill="#3A3326", opacity=".08")
             c.raw(f'<g clip-path="url(#{cid})">')
             c.rect(x0, y0, ww, wh, fill=m["divider"])
-            c.rect(x0, y0, ww, 24, fill=m["chrome"])
+            c.rect(x0, y0, ww, 24, fill="#FCFBF9" if side == 0 else m["spread"][0])  # 标题栏跟随聚焦面板
             lights(c, x0 + 14, y0 + 12, 4.5, 14)
             pw, ph = (ww - 4) / 3, (wh - 24 - 2) / 2
             for k in range(6):
@@ -465,7 +474,7 @@ def social(moods: list[dict]) -> str:
     o.append(f'<clipPath id="sw"><rect x="{wx}" y="{wy}" width="{ww}" height="{wh}" rx="14"/></clipPath>')
     o.append(f'<rect x="{wx}" y="{wy}" width="{ww}" height="{wh}" rx="14" fill="#000" filter="url(#ssh)" opacity=".85"/>')
     o.append(f'<g clip-path="url(#sw)"><rect x="{wx}" y="{wy}" width="{ww}" height="{wh}" fill="{m["divider"]}"/>')
-    o.append(f'<rect x="{wx}" y="{wy}" width="{ww}" height="{tb}" fill="{m["chrome"]}"/>')
+    o.append(f'<rect x="{wx}" y="{wy}" width="{ww}" height="{tb}" fill="{m["spread"][0]}"/>')  # 标题栏跟随聚焦面板
     for i, c in enumerate(["#FF5F57", "#FEBC2E", "#28C840"]):
         o.append(f'<circle cx="{wx + 20 + i * 20}" cy="{wy + tb / 2}" r="6.5" fill="{c}"/>')
     py0, ph = wy + tb, wh - tb

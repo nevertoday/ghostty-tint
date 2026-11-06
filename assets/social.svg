@@ -26,7 +26,7 @@
 <clipPath id="sw"><rect x="700" y="96" width="500" height="448" rx="14"/></clipPath>
 <rect x="700" y="96" width="500" height="448" rx="14" fill="#000" filter="url(#ssh)" opacity=".85"/>
 <g clip-path="url(#sw)"><rect x="700" y="96" width="500" height="448" fill="#D9D6CE"/>
-<rect x="700" y="96" width="500" height="34" fill="#F8F7F4"/>
+<rect x="700" y="96" width="500" height="34" fill="#EBD6D3"/>
 <circle cx="720" cy="113.0" r="6.5" fill="#FF5F57"/>
 <circle cx="740" cy="113.0" r="6.5" fill="#FEBC2E"/>
 <circle cx="760" cy="113.0" r="6.5" fill="#28C840"/>

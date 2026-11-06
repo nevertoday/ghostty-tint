@@ -68,9 +68,11 @@ function moodAt(t, switches) { // switches: [[t0, id], ...] 第一项 t0 = -1
   };
 }
 
-function frame({ panes, mood, title, cap, sub, key, t, fadeIn = 0, fadeOut = 99, stripMood }) {
-  document.getElementById("bar").style.background = mood.chrome;
-  const tt = document.getElementById("title"); tt.textContent = title; tt.style.color = mood.ink;
+function frame({ panes, mood, title, cap, sub, key, t, fadeIn = 0, fadeOut = 99, stripMood, focus = 0 }) {
+  // Ghostty 的透明标题栏跟随「当前聚焦面板」的背景色
+  const fp = panes[Math.min(focus, panes.length - 1)];
+  document.getElementById("bar").style.background = fp.bg;
+  const tt = document.getElementById("title"); tt.textContent = title; tt.style.color = mix(fp.bg, fp.fg, .5);
   const area = document.getElementById("area"); area.style.background = mood.div;
   area.innerHTML = panes.map(p => {
     const W = 840, H = 408;
@@ -161,7 +163,8 @@ function sceneSplit(t) {
   if (t >= 9.8) { cap = "tint mood paper"; sub = T.s4; }
   let key = 0; for (const s of S.splits) if (t > s - .3 && t < s + .25) key = t > s - .08 && t < s + .12 ? 1 : .4;
   if (t < .5) key = 0;
-  frame({ panes, mood, title: `ghostty — ${n} pane${n > 1 ? "s" : ""}`, cap, sub, key, t, fadeIn: .35, fadeOut: S.dur - .45 });
+  // ⌘D 之后焦点在新面板上
+  frame({ panes, mood, title: `ghostty — ${n} pane${n > 1 ? "s" : ""}`, cap, sub, key, t, fadeIn: .35, fadeOut: S.dur - .45, focus: n - 1 });
 }
 
 /* ---------- 场景二：AI Skill，一句话要一种气质 ---------- */
@@ -204,7 +207,7 @@ function sceneSkill(t) {
   });
   const cap = T.cap_skill;
   const sub = t < S.apply ? T.sub_skill : `${T.kyoto} · ${T.count8} · ${K.names.join(" ")}`;
-  frame({ panes, mood, title: "ghostty — claude", cap, sub, key: 0, t, fadeIn: .35, fadeOut: S.dur - .45, stripMood: t < S.apply ? M.paper : K });
+  frame({ panes, mood, title: "ghostty — claude", cap, sub, key: 0, t, fadeIn: .35, fadeOut: S.dur - .45, stripMood: t < S.apply ? M.paper : K, focus: 0 });
 }
 
 /* ---------- 入口 ---------- */
